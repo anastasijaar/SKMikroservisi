@@ -46,16 +46,16 @@ public class Controller {
 	public ResponseEntity<String> registerPost(@RequestBody RegistrationForm registrationForm) {
 
 		try {
-
-			// iscitavamo entitet iz registracione forme
-			User user = new User(registrationForm.getIme(), registrationForm.getPrezime(), registrationForm.getEmail(),
-					encoder.encode(registrationForm.getPassword()));
 			
 			//Proveravam da li u bazi postoji korisnik sa ovakvim mejlom, i ako postoji vracam BAD_REQUEST
 			User proveraMeila = userRepo.findByEmail(registrationForm.getEmail());
 			if(proveraMeila != null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
+
+			// iscitavamo entitet iz registracione forme
+			User user = new User(registrationForm.getIme(), registrationForm.getPrezime(), registrationForm.getEmail(),
+					encoder.encode(registrationForm.getPassword()));
 
 			// cuvamo u nasoj bazi ovaj entitet
 			userRepo.saveAndFlush(user);
@@ -76,7 +76,6 @@ public class Controller {
 	}
 	
 	public static void sendMail(String to) throws Exception {
-		System.out.println("Spremamo se da posljemo poruku!");
 		Properties properties = new Properties();
 		
 		properties.put("mail.smtp.auth", "true");
@@ -98,7 +97,6 @@ public class Controller {
 		Message message = prepareMessage(session, myAccountEmail, to);
 		
 		Transport.send(message);
-		System.out.println("Poruka se salje...");
 	}
 	
 	//Pravimo poruku
