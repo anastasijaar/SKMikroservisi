@@ -6,6 +6,9 @@ public class RegistrationForm {
 	private String prezime;
 	private String email;
 	private String password;
+	private int predjeneMilje;
+	private String brojPasosa;
+	private boolean isAdmin;
 
 	public String getIme() {
 		return ime;
@@ -37,6 +40,30 @@ public class RegistrationForm {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public int getPredjeneMilje() {
+		return predjeneMilje;
+	}
+
+	public void setPredjeneMilje(int predjeneMilje) {
+		this.predjeneMilje = predjeneMilje;
+	}
+
+	public String getBrojPasosa() {
+		return brojPasosa;
+	}
+
+	public void setBrojPasosa(String brojPasosa) {
+		this.brojPasosa = brojPasosa;
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 }

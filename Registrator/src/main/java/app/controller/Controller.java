@@ -55,7 +55,7 @@ public class Controller {
 
 			// iscitavamo entitet iz registracione forme
 			User user = new User(registrationForm.getIme(), registrationForm.getPrezime(), registrationForm.getEmail(),
-					encoder.encode(registrationForm.getPassword()));
+					encoder.encode(registrationForm.getPassword()),registrationForm.getPredjeneMilje(), registrationForm.getBrojPasosa());
 
 			// cuvamo u nasoj bazi ovaj entitet
 			userRepo.saveAndFlush(user);
