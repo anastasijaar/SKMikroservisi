@@ -21,10 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
+import app.entities.Kartica;
 import app.entities.User;
+import app.entities.User_Kartica;
+import app.forms.Kartica_Form;
 import app.forms.RegistrationForm;
 import app.forms.UrdiProfil_Form;
+import app.repository.KarticaRepository;
 import app.repository.UserRepository;
+import app.repository.User_KarticaRepository;
 
 //importi za mejl
 import javax.mail.*;
@@ -37,11 +42,15 @@ public class Controller {
 
 	private BCryptPasswordEncoder encoder;
 	private UserRepository userRepo;
+	private KarticaRepository karticaRepo;
+	private User_KarticaRepository userKarticaRepo;
 
 	@Autowired
-	public Controller(BCryptPasswordEncoder encoder, UserRepository userRepo) {
+	public Controller(BCryptPasswordEncoder encoder, UserRepository userRepo, KarticaRepository karticaRepo, User_KarticaRepository userKarticaRepo) {
 		this.encoder = encoder;
 		this.userRepo = userRepo;
+		this.karticaRepo = karticaRepo;
+		this.userKarticaRepo = userKarticaRepo;
 	}
 
 	@PostMapping("/register")
@@ -190,5 +199,33 @@ public class Controller {
 			
 		}
 		return null;
+	}
+	
+	@PostMapping("/dodelaKreditneKartice")
+	public ResponseEntity<String> karticaPost(@RequestBody Kartica_Form karticaForm, @RequestHeader(value = HEADER_STRING) String token) {
+		try {
+			
+			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
+
+			User user = userRepo.findByEmail(email);
+			
+			Kartica kartica = new Kartica(karticaForm.getBrojKartice(), karticaForm.getSigurnosniBroj(), karticaForm.getStanjeNaRacunu());
+			kartica.setImeVlasnika(user.getIme());
+			kartica.setPrezimeVlasnika(user.getPrezime());
+			
+			karticaRepo.save(kartica);
+			
+			User_Kartica userKartica = new User_Kartica();
+			userKartica.setKartica(kartica);
+			userKartica.setUser(user);
+			
+			userKarticaRepo.save(userKartica);
+			
+			return new ResponseEntity<>("success", HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
 	}
 }
