@@ -18,7 +18,7 @@ public class Kartica {
 	private String brKartice;
 	private String sigurnosniKod;
 	private int stanjeNaRacunu;
-	private int idKupujeKartu;
+	//private List<Integer> kupujeKarte;
 
 	@OneToMany(mappedBy = "kartica")
 	private List<User_Kartica> korisnici;
@@ -27,13 +27,13 @@ public class Kartica {
 
 	}
 
-	public int getIdKupujeKartu() {
-		return idKupujeKartu;
+	/*public List<Integer> getKupujeKarte() {
+		return kupujeKarte;
 	}
 
-	public void setIdKupujeKartu(int idKupujeKartu) {
-		this.idKupujeKartu = idKupujeKartu;
-	}
+	public void setKupujeKarte(List<Integer> kupujeKarte) {
+		this.kupujeKarte = kupujeKarte;
+	}*/
 
 	public int getStanjeNaRacunu() {
 		return stanjeNaRacunu;
