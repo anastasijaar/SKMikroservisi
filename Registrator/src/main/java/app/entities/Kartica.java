@@ -13,11 +13,12 @@ public class Kartica {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idKartice;
+	private int idKartice;
 
 	private String brKartice;
 	private String sigurnosniKod;
 	private int stanjeNaRacunu;
+	private int idKupujeKartu;
 
 	@OneToMany(mappedBy = "kartica")
 	private List<User_Kartica> korisnici;
@@ -26,12 +27,12 @@ public class Kartica {
 
 	}
 
-	public long getId() {
-		return idKartice;
+	public int getIdKupujeKartu() {
+		return idKupujeKartu;
 	}
 
-	public void setId(long idKartice) {
-		this.idKartice = idKartice;
+	public void setIdKupujeKartu(int idKupujeKartu) {
+		this.idKupujeKartu = idKupujeKartu;
 	}
 
 	public int getStanjeNaRacunu() {
@@ -62,7 +63,7 @@ public class Kartica {
 		return idKartice;
 	}
 
-	public void setIdKartice(long idKartice) {
+	public void setIdKartice(int idKartice) {
 		this.idKartice = idKartice;
 	}
 
