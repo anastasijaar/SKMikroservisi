@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -23,19 +21,15 @@ public class User {
 	private String password;
 	private int predjeneMilje;
 	private String brojPasosa;
+	private TipRanka rank;
 	
 	@OneToMany(mappedBy = "user")
     private List<User_Kartica> kartice;
     
-    @ManyToOne
-    @JoinColumn(name = "idRank")
-    private Rank rank;
-
 	public User() {
 
 	}
 	
-
 	public User(String ime, String prezime, String email, String password, int predjeneMilje,
 			String brojPasosa) {
 		this.ime = ime;
@@ -44,8 +38,17 @@ public class User {
 		this.password = password;
 		this.predjeneMilje = predjeneMilje;
 		this.brojPasosa = brojPasosa;
+		this.rank = TipRanka.BRONZA;
 	}
 
+	public void setRank(TipRanka rank) {
+		this.rank = rank;
+	}
+
+	public TipRanka getRank() {
+		return rank;
+	}
+	
 	public String getIme() {
 		return ime;
 	}
@@ -113,17 +116,6 @@ public class User {
 	public void setKartice(List<User_Kartica> kartice) {
 		this.kartice = kartice;
 	}
-
-
-	public Rank getRank() {
-		return rank;
-	}
-
-
-	public void setRank(Rank rank) {
-		this.rank = rank;
-	}
-
 
 	@Override
 	public String toString() {
