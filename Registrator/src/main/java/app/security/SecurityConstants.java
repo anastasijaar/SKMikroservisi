@@ -14,5 +14,5 @@ public final class SecurityConstants {
 	public static final String ADMINLOGIN_PATH = "/loginAdmin";
 	public static final String UREDIPROFIL_PATH = "/urediProfil";
 	public static final String KREDITNAKARTICA_PATH = "/dodelaKreditneKartice";
-
+	public static final String DODAVANJEMILJA_PATH = "/dodavanjeMilja";
 }

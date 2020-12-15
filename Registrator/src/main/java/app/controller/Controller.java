@@ -22,9 +22,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
 import app.entities.Kartica;
+import app.entities.TipRanka;
 import app.entities.User;
 import app.entities.User_Kartica;
 import app.forms.Kartica_Form;
+import app.forms.Rank_Form;
 import app.forms.RegistrationForm;
 import app.forms.UrdiProfil_Form;
 import app.repository.KarticaRepository;
@@ -196,9 +198,10 @@ public class Controller {
 			
 			return new ResponseEntity<>(HttpStatus.CREATED);
 		}catch (Exception e) {
-			
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		return null;
+		
 	}
 	
 	@PostMapping("/dodelaKreditneKartice")
@@ -228,4 +231,41 @@ public class Controller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PutMapping("/dodavanjeMilja")
+	public ResponseEntity<String> dodavanjeMiljaPut(@RequestBody Rank_Form rankForm, @RequestHeader(value = HEADER_STRING) String token){
+		
+		try {
+			
+			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
+
+			User user = userRepo.findByEmail(email);
+			
+			int milje = rankForm.getMilje();
+			
+			user.setPredjeneMilje(user.getPredjeneMilje() + milje);
+			
+			if(user.getPredjeneMilje() < 1000) {
+				user.setRank(TipRanka.BRONZA);
+			}
+			else if(user.getPredjeneMilje() >= 1000 && user.getPredjeneMilje() < 10000) {
+				user.setRank(TipRanka.SREBRO);
+			}
+			else
+			{
+				user.setRank(TipRanka.ZLATO);
+			}
+			
+			userRepo.save(user);
+			return new ResponseEntity<>(HttpStatus.CREATED);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+
+	
 }
