@@ -12,7 +12,7 @@ public class User_Kartica {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private int idUserKartuca;
 
 	@ManyToOne
 	@JoinColumn(name = "idUser")
@@ -26,12 +26,12 @@ public class User_Kartica {
 
 	}
 
-	public long getId() {
-		return id;
+	public int getIdUserKartuca() {
+		return idUserKartuca;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setIdUserKartuca(int idUserKartuca) {
+		this.idUserKartuca = idUserKartuca;
 	}
 
 	public User getUser() {

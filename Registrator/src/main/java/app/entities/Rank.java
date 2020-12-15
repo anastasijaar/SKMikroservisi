@@ -13,7 +13,7 @@ public class Rank {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idRank;
+	private int idRank;
 	
 	private String imeRanka;
 	
@@ -23,14 +23,6 @@ public class Rank {
 	
 	public Rank() {
 		
-	}
-
-	public long getId() {
-		return idRank;
-	}
-
-	public void setId(long idRank) {
-		this.idRank = idRank;
 	}
 
 	public String getImeRanka() {
@@ -45,7 +37,7 @@ public class Rank {
 		return idRank;
 	}
 
-	public void setIdRank(long idRank) {
+	public void setIdRank(int idRank) {
 		this.idRank = idRank;
 	}
 
