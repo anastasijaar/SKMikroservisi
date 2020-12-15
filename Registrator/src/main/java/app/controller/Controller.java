@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 
 import app.entities.User;
 import app.forms.RegistrationForm;
+import app.forms.UrdiProfil_Form;
 import app.repository.UserRepository;
 
 //importi za mejl
@@ -131,5 +133,62 @@ public class Controller {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PutMapping("/urediProfil")
+	public ResponseEntity<String> registerPut(@RequestBody UrdiProfil_Form urediProfilForm, @RequestHeader(value = HEADER_STRING) String token){
+		try {
+			
+			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
 
+			User user = userRepo.findByEmail(email);
+			
+			String mail = user.getEmail();
+			String ime = user.getIme();
+			String prezime = user.getPrezime();
+			String brPasosa = user.getBrojPasosa();
+			String password = user.getPassword();
+			
+			System.out.println("Stari podaci:\nmail: " + mail + "\nime:" + ime + "\nprezime: " + prezime +"\nbrPasosa: " + brPasosa + "\npassword: " + password);
+			
+			
+			//Setujemo stare vrednosti na nove
+			if(urediProfilForm.getIme() != null)
+				user.setIme(urediProfilForm.getIme());
+			else
+				user.setIme(ime);
+			
+			if(urediProfilForm.getPrezime() != null)
+				user.setPrezime(urediProfilForm.getPrezime());
+			else 
+				user.setPrezime(prezime);
+			
+			if(urediProfilForm.getBrojPasosa() != null)
+				user.setBrojPasosa(urediProfilForm.getBrojPasosa());
+			else 
+				user.setBrojPasosa(brPasosa);
+
+			if(urediProfilForm.getEmail() != null)
+				user.setEmail(urediProfilForm.getEmail());
+			else 
+				user.setEmail(mail);
+			
+			if(mail != user.getEmail()) {
+				sendMail(user.getEmail());
+			}
+			
+			if(urediProfilForm.getPassword() != null)
+				user.setPassword(encoder.encode(urediProfilForm.getPassword()));
+			else
+				user.setPassword(password);
+			
+			userRepo.save(user);
+			
+			
+			return new ResponseEntity<>(HttpStatus.CREATED);
+		}catch (Exception e) {
+			
+		}
+		return null;
+	}
 }
