@@ -17,6 +17,7 @@ public class Kartica {
 
 	private String brKartice;
 	private String sigurnosniKod;
+	private int stanjeNaRacunu;
 
 	@OneToMany(mappedBy = "kartica")
 	private List<User_Kartica> korisnici;
@@ -31,6 +32,14 @@ public class Kartica {
 
 	public void setId(long idKartice) {
 		this.idKartice = idKartice;
+	}
+
+	public int getStanjeNaRacunu() {
+		return stanjeNaRacunu;
+	}
+
+	public void setStanjeNaRacunu(int stanjeNaRacunu) {
+		this.stanjeNaRacunu = stanjeNaRacunu;
 	}
 
 	public String getBrKartice() {
