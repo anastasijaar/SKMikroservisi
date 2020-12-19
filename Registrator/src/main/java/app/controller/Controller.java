@@ -146,7 +146,7 @@ public class Controller {
 	}
 	
 	@PutMapping("/urediProfil")
-	public ResponseEntity<String> registerPut(@RequestBody UrdiProfil_Form urediProfilForm, @RequestHeader(value = HEADER_STRING) String token){
+	public ResponseEntity<String> registerPut(@RequestHeader(value = HEADER_STRING) String token, @RequestBody UrdiProfil_Form urediProfilForm){
 		try {
 			
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
