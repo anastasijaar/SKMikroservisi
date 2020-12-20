@@ -19,7 +19,7 @@ public class Admin {
 		
 	}
 
-	public long getIdAdmina() {
+	public int getIdAdmina() {
 		return idAdmina;
 	}
 
