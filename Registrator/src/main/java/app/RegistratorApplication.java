@@ -14,7 +14,7 @@ public class RegistratorApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(RegistratorApplication.class, args);
+		SpringApplication.run(RegistratorApplication.class,  args);
 	}
 
 }
