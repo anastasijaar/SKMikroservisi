@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import app.entities.User_Kartica;
 
 @Repository
-public interface User_KarticaRepository extends JpaRepository<User_Kartica, Long> {
+public interface User_KarticaRepository extends JpaRepository<User_Kartica, Integer> {
 
 }
