@@ -12,6 +12,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import app.repository.AdminRepository;
 import app.repository.UserRepository;
 
 import static app.security.SecurityConstants.*;

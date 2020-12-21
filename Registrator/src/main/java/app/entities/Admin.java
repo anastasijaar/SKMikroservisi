@@ -12,7 +12,7 @@ public class Admin {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idAdmina;
 	
-	private String username;
+	private String email;
 	private String password;
 	
 	public Admin() {
@@ -28,11 +28,11 @@ public class Admin {
 	}
 
 	public String getUsername() {
-		return username;
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -45,6 +45,6 @@ public class Admin {
 
 	@Override
 	public String toString() {
-		return username + ", " + password;
+		return email + ", " + password;
 	}
 }

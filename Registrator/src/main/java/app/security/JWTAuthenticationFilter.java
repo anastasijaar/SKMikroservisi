@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.forms.Admin_Form;
 import app.forms.Login_Form;
 
 import static app.security.SecurityConstants.*;
@@ -39,6 +40,8 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			throws AuthenticationException {
 		try {
 			Login_Form user = new ObjectMapper().readValue(req.getInputStream(), Login_Form.class);
+			
+			//Admin_Form user = new ObjectMapper().readValue(req.getInputStream(), Admin_Form.class);
 
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getEmail(),
 					user.getPassword(), Collections.emptyList());

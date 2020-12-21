@@ -20,6 +20,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import app.repository.AdminRepository;
 import app.repository.UserRepository;
 
 /**
@@ -62,7 +63,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			if (userRepo.existsByEmail(email) == false) {
 				return null;
 			}
-
+			
 			if (email != null) {
 				return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
 			}

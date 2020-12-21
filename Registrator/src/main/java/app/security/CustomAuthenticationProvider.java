@@ -11,7 +11,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import app.entities.Admin;
 import app.entities.User;
+import app.repository.AdminRepository;
 import app.repository.UserRepository;
 
 @Component
@@ -34,7 +36,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		User user = userRepo.findByEmail(email);
 
 		if (user == null) {
+			
 			throw new BadCredentialsException("Authentication failed");
+			
 		}
 
 		// proveri sifru

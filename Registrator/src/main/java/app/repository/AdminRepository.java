@@ -8,5 +8,6 @@ import app.entities.Admin;
 @Repository
 public interface AdminRepository extends JpaRepository<Admin, Integer> {
 
-	Admin findByUsername(String username);
+	Admin findByEmail(String email);
+	boolean existsByEmail(String email);
 }
