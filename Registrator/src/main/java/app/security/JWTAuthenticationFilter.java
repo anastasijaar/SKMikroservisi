@@ -18,8 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.forms.Admin_Form;
 import app.forms.Login_Form;
+import app.repository.AdminRepository;
+import app.repository.UserRepository;
 
 import static app.security.SecurityConstants.*;
 
@@ -30,9 +31,13 @@ import static app.security.SecurityConstants.*;
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
 	private AuthenticationManager authenticationManager;
+	private UserRepository userRepo;
+	private AdminRepository adminRepo;
 
-	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepo, AdminRepository adminRepo) {
 		this.authenticationManager = authenticationManager;
+		this.userRepo = userRepo;
+		this.adminRepo = adminRepo;
 	}
 
 	@Override
@@ -57,11 +62,20 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			Authentication auth) {
 
 		String email = auth.getName();
-
-		String token = JWT.create().withSubject(email)
+		String token = null;
+		if(userRepo.existsByEmail(email)) {
+			token = JWT.create().withSubject(email)
 				.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.sign(HMAC512(SECRET.getBytes()));
-
-		res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+			res.addHeader(HEADER_STRING, TOKEN_PREFIX + token);
+		}
+		else if(adminRepo.existsByEmail(email)) {
+			token = JWT.create().withSubject(email)
+					.withExpiresAt(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
+					.sign(HMAC512(ADMIN_SECRET.getBytes()));
+			res.addHeader(HEADER_STRING, ADMIN_TOKEN_PREFIX + token);
+		}
+		
+		
 	}
 }

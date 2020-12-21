@@ -30,17 +30,19 @@ import app.repository.UserRepository;
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private UserRepository userRepo;
+	private AdminRepository adminRepo;
 
 	@Autowired
-	public JWTAuthorizationFilter(AuthenticationManager authManager, UserRepository userRepo) {
+	public JWTAuthorizationFilter(AuthenticationManager authManager, UserRepository userRepo, AdminRepository adminRepo) {
 		super(authManager);
 		this.userRepo = userRepo;
+		this.adminRepo = adminRepo;
 	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
 			throws IOException, ServletException {
-
+		
 		String token = req.getHeader(HEADER_STRING);
 
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req, token);
@@ -61,7 +63,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 			// Provera da li se nalazi user u bazi
 			if (userRepo.existsByEmail(email) == false) {
-				return null;
+				
+				jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
+						.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
+				
+				email = jwt.getSubject();
+				
+				if(adminRepo.existsByEmail(email) == false) {
+					return null;
+				}
 			}
 			
 			if (email != null) {

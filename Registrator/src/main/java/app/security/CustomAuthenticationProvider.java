@@ -21,11 +21,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	private PasswordEncoder encoder;
 	private UserRepository userRepo;
+	private AdminRepository adminRepo;
 
 	@Autowired
-	public CustomAuthenticationProvider(UserRepository userRepo) {
+	public CustomAuthenticationProvider(UserRepository userRepo, AdminRepository adminRepo) {
 		super();
 		this.userRepo = userRepo;
+		this.adminRepo = adminRepo;
 	}
 
 	@Override
@@ -35,14 +37,24 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		User user = userRepo.findByEmail(email);
 
-		if (user == null) {
-			
-			throw new BadCredentialsException("Authentication failed");
+		if (user != null && encoder.matches(password, user.getPassword())) {
+			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
+			//throw new BadCredentialsException("Authentication failed");
 			
 		}
 
 		// proveri sifru
-		if (encoder.matches(password, user.getPassword())) {
+		/*if (encoder.matches(password, user.getPassword())) {
+			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
+		}*/
+		
+		Admin admin = adminRepo.findByEmail(email);
+		
+		if(admin == null) {
+			throw new BadCredentialsException("Authentication failed");
+		}
+		
+		if(encoder.matches(password, admin.getPassword())){
 			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
 		}
 
