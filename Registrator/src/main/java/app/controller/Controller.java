@@ -28,7 +28,7 @@ import app.entities.User_Kartica;
 import app.forms.Kartica_Form;
 import app.forms.Rank_Form;
 import app.forms.RegistrationForm;
-import app.forms.UrdiProfil_Form;
+import app.forms.UrediProfil_Form;
 import app.repository.KarticaRepository;
 import app.repository.UserRepository;
 import app.repository.User_KarticaRepository;
@@ -146,7 +146,7 @@ public class Controller {
 	}
 	
 	@PutMapping("/urediProfil")
-	public ResponseEntity<String> registerPut(@RequestHeader(value = HEADER_STRING) String token, @RequestBody UrdiProfil_Form urediProfilForm){
+	public ResponseEntity<String> registerPut(@RequestHeader(value = HEADER_STRING) String token, @RequestBody UrediProfil_Form urediProfilForm){
 		try {
 			
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
@@ -179,8 +179,9 @@ public class Controller {
 			else 
 				user.setBrojPasosa(brPasosa);
 
-			if(urediProfilForm.getEmail() != null)
+			if(urediProfilForm.getEmail() != null) {
 				user.setEmail(urediProfilForm.getEmail());
+			}
 			else 
 				user.setEmail(mail);
 			

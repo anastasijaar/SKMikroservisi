@@ -1,6 +1,6 @@
 package app.forms;
 
-public class UrdiProfil_Form {
+public class UrediProfil_Form {
 
 	private String ime;
 	private String prezime;
