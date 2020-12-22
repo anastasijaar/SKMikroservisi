@@ -16,8 +16,13 @@ public class Config {
 	public String brokerUrl;
 	
 	@Bean
-	public Queue emailQue() {
-		return new ActiveMQQueue("email.queue");
+	public Queue userQue() {
+		return new ActiveMQQueue("user.queue");
+	}
+	
+	@Bean
+	public Queue kartaQue() {
+		return new ActiveMQQueue("karta.queue");
 	}
 	
 	@Bean 

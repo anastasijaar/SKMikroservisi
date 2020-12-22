@@ -61,8 +61,8 @@ public class Controller {
 		try {
 			
 			//Proveravam da li u bazi postoji korisnik sa ovakvim mejlom, i ako postoji vracam BAD_REQUEST
-			User proveraMeila = userRepo.findByEmail(registrationForm.getEmail());
-			if(proveraMeila != null) {
+			User proveraMejla = userRepo.findByEmail(registrationForm.getEmail());
+			if(proveraMejla != null) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
