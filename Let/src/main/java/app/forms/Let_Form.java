@@ -7,7 +7,14 @@ public class Let_Form {
 	private int duzinaLeta;
 	private int cena;
 	private boolean isCanceled;
+	private int idAviona;
 	
+	public int getIdAviona() {
+		return idAviona;
+	}
+	public void setIdAviona(int idAviona) {
+		this.idAviona = idAviona;
+	}
 	public String getPocetnaDestinacija() {
 		return pocetnaDestinacija;
 	}

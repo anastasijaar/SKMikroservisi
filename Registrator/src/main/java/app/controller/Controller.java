@@ -214,7 +214,7 @@ public class Controller {
 
 			User user = userRepo.findByEmail(email);
 			
-			Kartica kartica = new Kartica(karticaForm.getBrojKartice(), karticaForm.getSigurnosniBroj(), karticaForm.getStanjeNaRacunu());
+			Kartica kartica = new Kartica(karticaForm.getBrojKartice(), karticaForm.getSigurnosniBroj());
 			kartica.setImeVlasnika(user.getIme());
 			kartica.setPrezimeVlasnika(user.getPrezime());
 			

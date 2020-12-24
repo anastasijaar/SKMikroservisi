@@ -19,7 +19,6 @@ public class Kartica {
 	private String prezimeVlasnika;
 	private String brKartice;
 	private String sigurnosniKod;
-	private int stanjeNaRacunu;
 	
 
 	@OneToMany(mappedBy = "kartica")
@@ -29,13 +28,10 @@ public class Kartica {
 
 	}
 	
-	
-
-	public Kartica(String brKartice, String sigurnosniKod, int stanjeNaRacunu) {
+	public Kartica(String brKartice, String sigurnosniKod) {
 		super();
 		this.brKartice = brKartice;
 		this.sigurnosniKod = sigurnosniKod;
-		this.stanjeNaRacunu = stanjeNaRacunu;
 	}
 
 	public String getImeVlasnika() {
@@ -52,14 +48,6 @@ public class Kartica {
 
 	public void setPrezimeVlasnika(String prezimeVlasnika) {
 		this.prezimeVlasnika = prezimeVlasnika;
-	}
-
-	public int getStanjeNaRacunu() {
-		return stanjeNaRacunu;
-	}
-
-	public void setStanjeNaRacunu(int stanjeNaRacunu) {
-		this.stanjeNaRacunu = stanjeNaRacunu;
 	}
 
 	public String getBrKartice() {
@@ -98,8 +86,5 @@ public class Kartica {
 	public String toString() {
 		return brKartice + ", " + sigurnosniKod;
 	}
-	
-	
-
 }
 

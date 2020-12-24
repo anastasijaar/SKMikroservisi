@@ -22,7 +22,6 @@ public class User {
 	private int predjeneMilje;
 	private String brojPasosa;
 	private TipRanka rank;
-	//private List<Integer> kupujeKarte;
 	
 	@OneToMany(mappedBy = "user")
     private List<User_Kartica> kartice;
@@ -113,14 +112,6 @@ public class User {
 	public void setKartice(List<User_Kartica> kartice) {
 		this.kartice = kartice;
 	}
-
-	/*public List<Integer> getKupujeKarte() {
-		return kupujeKarte;
-	}
-
-	public void setKupujeKarte(List<Integer> kupujeKarte) {
-		this.kupujeKarte = kupujeKarte;
-	}*/
 
 	@Override
 	public String toString() {

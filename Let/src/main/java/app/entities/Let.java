@@ -1,7 +1,5 @@
 package app.entities;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +19,6 @@ public class Let {
 	private int duzinaLeta;
 	private int cena;
 	private boolean isCanceled;
-	//private List<Integer> kupujeKarte;
 	
 	@ManyToOne
 	@JoinColumn(name = "idAviona")
@@ -31,16 +28,14 @@ public class Let {
 	
 	}
 
-	public Let(int idLeta, String pocetnaDestinacija, String krajnjaDestinacija, int duzinaLeta, int cena,
-			boolean isCanceled, List<Integer> kupujeKarte) {
+	public Let(String pocetnaDestinacija, String krajnjaDestinacija, int duzinaLeta, int cena,
+			boolean isCanceled) {
 		super();
-		this.idLeta = idLeta;
 		this.pocetnaDestinacija = pocetnaDestinacija;
 		this.krajnjaDestinacija = krajnjaDestinacija;
 		this.duzinaLeta = duzinaLeta;
 		this.cena = cena;
 		this.isCanceled = isCanceled;
-		//this.kupujeKarte = kupujeKarte;
 	}
 
 	public int getIdLeta() {
@@ -90,14 +85,6 @@ public class Let {
 	public void setCanceled(boolean isCanceled) {
 		this.isCanceled = isCanceled;
 	}
-
-	/*public List<Integer> getKupujeKarte() {
-		return kupujeKarte;
-	}
-
-	public void setKupujeKarte(List<Integer> kupujeKarte) {
-		this.kupujeKarte = kupujeKarte;
-	}*/
 
 	public Avion getAvion() {
 		return avion;

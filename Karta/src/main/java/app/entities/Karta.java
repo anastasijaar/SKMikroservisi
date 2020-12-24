@@ -17,6 +17,15 @@ public class Karta {
 	private int idUser;
 	private int idLeta;
 	private LocalDate datumKupovine;
+	private boolean isCanceled;
+
+	public boolean isCanceled() {
+		return isCanceled;
+	}
+
+	public void setCanceled(boolean isCanceled) {
+		this.isCanceled = isCanceled;
+	}
 
 	public int getIdKarte() {
 		return idKarte;
