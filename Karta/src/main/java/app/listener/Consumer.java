@@ -18,9 +18,9 @@ public class Consumer {
 		this.kartaRepo = kartaRepo;
 	}
 	
-	@JmsListener (destination = "karta.queue")
+	@JmsListener (destination = "let.queue")
 	public void consume(int id) {
-
+		System.out.println("Udje u karta klasu!");
 		Karta karta = kartaRepo.selectCardByPlaneID(id);
 		
 		if(karta == null) {

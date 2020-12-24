@@ -21,8 +21,8 @@ public class Config {
 	}
 	
 	@Bean
-	public Queue kartaQue() {
-		return new ActiveMQQueue("karta.queue");
+	public Queue letQue() {
+		return new ActiveMQQueue("let.queue");
 	}
 	
 	@Bean 

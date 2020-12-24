@@ -1,13 +1,14 @@
 package app.controller;
 
-import static app.security.SecurityConstants.HEADER_STRING;
 import static app.security.SecurityConstants.ADMIN_SECRET;
 import static app.security.SecurityConstants.ADMIN_TOKEN_PREFIX;
+import static app.security.SecurityConstants.HEADER_STRING;
+
+import java.util.List;
 
 import javax.jms.Queue;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
@@ -32,27 +33,24 @@ import app.repository.LetRepository;
 
 @RestController
 @RequestMapping("/admin")
-public class DodavanjeIBrisanjeAviona {
+public class BrisanjeLetovaController {
 
 	@Autowired
 	JmsTemplate jmsTemplate;
 
 	@Autowired
-	Queue userQue;
-	
-	@Autowired
-	Queue kartaQue;
-	
-	private AvionRepository avionRepo;
+	Queue letQue;
 	
 	private LetRepository letRepo;
 	
+	private AvionRepository avionRepo;
+	
 	@Autowired
-	public DodavanjeIBrisanjeAviona (AvionRepository avionRepo, LetRepository letRepo) {
-		this.avionRepo = avionRepo;
+	public BrisanjeLetovaController(LetRepository letRepo, AvionRepository avionRepo) {
 		this.letRepo = letRepo;
+		this.avionRepo = avionRepo;
 	}
-
+	
 	@GetMapping("/{imeLeta}")
 	public ResponseEntity<String> updateKarteProduct(@RequestHeader(value = HEADER_STRING) String token,
 			@PathVariable String imeLeta) {
@@ -62,7 +60,7 @@ public class DodavanjeIBrisanjeAviona {
 					.verify(token.replace(ADMIN_TOKEN_PREFIX, "")).getSubject();
 
 			// stavljamo email u queue za email service
-			jmsTemplate.convertAndSend(userQue, email);
+			//jmsTemplate.convertAndSend(userQue, email);
 
 			return new ResponseEntity<String>("Flight successfully updated", HttpStatus.ACCEPTED);
 		} catch (Exception e) {
@@ -77,12 +75,12 @@ public class DodavanjeIBrisanjeAviona {
 
 		try {
 			Let let = new Let(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(), letForm.getDuzinaLeta(), letForm.getCena(), letForm.isCanceled());
-			
+
 			int idAviona = letForm.getIdAviona();
-			
+
 			//Trazimo avion u bazi podataka, da bi ga dodali na let
 			Avion avion = avionRepo.findByIdAviona(idAviona);
-			
+
 			//Ako ne postoji avion sa prosledjenim id, vraca gresku
 			if(avion == null) {
 				return new ResponseEntity<String>("Ne postoji avion sa prosledjenim id-om!", HttpStatus.BAD_REQUEST);
@@ -90,14 +88,15 @@ public class DodavanjeIBrisanjeAviona {
 				//Taj avion dodajemo na let
 				let.setAvion(avion);
 			}
-			
+
 			letRepo.save(let);
-			
+
 			return new ResponseEntity<>("Let uspesno dodat!", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
+
 	}
 	
 	@PatchMapping("/brisanjeLeta")
@@ -105,15 +104,14 @@ public class DodavanjeIBrisanjeAviona {
 		
 		try {
 			String imeAviona = avionForm.getNazivAviona();
-			
 			Let let = letRepo.selectFlightByPlaneName(imeAviona);
 			
-			if(let == null) {
-				return new ResponseEntity<String>("Ne postoji let sa prosledjenim imenom", HttpStatus.BAD_REQUEST);
-			}
+			int idLeta = let.getIdLeta();
 			
-			int id = let.getIdLeta();
-			jmsTemplate.convertAndSend(kartaQue, id);
+			let.setCanceled(true);
+			letRepo.save(let);
+			
+			jmsTemplate.convertAndSend(letQue, idLeta);
 			
 			return new ResponseEntity<String>("Let uspesno obrisan", HttpStatus.ACCEPTED);
 		}catch (Exception e) {

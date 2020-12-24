@@ -1,6 +1,5 @@
 package app.forms;
 
-import java.time.LocalDate;
 
 public class KupovinaKarte_Form {
 

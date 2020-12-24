@@ -9,6 +9,8 @@ import app.entities.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 
 	User findByEmail(String email);
+	
+	User findByIdUser(int idUser);
 
 	boolean existsByEmail(String email);
 }

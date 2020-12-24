@@ -12,4 +12,6 @@ public interface LetRepository extends JpaRepository<Let, Integer>{
 	//Selekcija leta po imenu aviona
 	@Query("select l from Let l where l.avion.nazivAviona like :ime")
 	Let selectFlightByPlaneName(String ime);
+	
+	Let findByIdLeta(int idLeta);
 }
