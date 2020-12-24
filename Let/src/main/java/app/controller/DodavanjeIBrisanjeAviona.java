@@ -13,24 +13,25 @@ import org.springframework.web.bind.annotation.RestController;
 import app.entities.Avion;
 import app.entities.Let;
 import app.forms.Avion_Form;
+import app.forms.Let_Form;
 import app.repository.AvionRepository;
 import app.repository.LetRepository;
 
 @RestController
-public class Controller {
+public class DodavanjeIBrisanjeAviona {
 	
 	private AvionRepository avionRepo;
 	
 	private LetRepository letRepo;
 	
 	@Autowired
-	public Controller(AvionRepository avionRepo, LetRepository letRepo) {
+	public DodavanjeIBrisanjeAviona(AvionRepository avionRepo, LetRepository letRepo) {
 		this.avionRepo = avionRepo;
 		this.letRepo = letRepo;
 	}
 	
-	@PostMapping("/avion")
-	public ResponseEntity<String> avionPost(@RequestBody Avion_Form avionForm) {
+	@PostMapping("/dodavanjeAviona")
+	public ResponseEntity<String> dodavanjeAvionaPost(@RequestBody Avion_Form avionForm) {
 		try {
 			
 			Avion avion = new Avion(avionForm.getNazivAviona(), avionForm.getKapacitet(), avionForm.getTrenutnoPutnika());
@@ -45,20 +46,28 @@ public class Controller {
 		}
 	}
 	
-	@GetMapping("/spisakLetova")
-	public ResponseEntity<String> spisakLetova(){
-		
+	@PostMapping("/brisanjeAviona")
+	public ResponseEntity<String> brisanjeAvionaPost(@RequestBody Avion_Form avionForm) {
 		try {
 			
-			List<Let> let = letRepo.selectAllFlightWithFreeSpace();
-			for (Let l : let) {
-				System.out.println(l.getPocetnaDestinacija() + " " + l.getKrajnjaDestinacija());
-			}
+			int idAviona = avionForm.getIdAviona();
+			Avion avion = avionRepo.findByIdAviona(idAviona);
 			
-			return new ResponseEntity<>("sve ok", HttpStatus.OK);
+			List<Let> letovi = letRepo.selectFlightWithPlane(avion);
+			
+			if(letovi.size() == 0) {
+				avionRepo.delete(avion);
+				return new ResponseEntity<>("success", HttpStatus.OK);
+			}
+			return new ResponseEntity<String>("Avion ne moze biti obrisan jer pripada letu.", HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	
+	
+	
+	
 }

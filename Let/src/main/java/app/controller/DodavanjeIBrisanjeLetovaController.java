@@ -33,7 +33,7 @@ import app.repository.LetRepository;
 
 @RestController
 @RequestMapping("/admin")
-public class BrisanjeLetovaController {
+public class DodavanjeIBrisanjeLetovaController {
 
 	@Autowired
 	JmsTemplate jmsTemplate;
@@ -46,7 +46,7 @@ public class BrisanjeLetovaController {
 	private AvionRepository avionRepo;
 	
 	@Autowired
-	public BrisanjeLetovaController(LetRepository letRepo, AvionRepository avionRepo) {
+	public DodavanjeIBrisanjeLetovaController(LetRepository letRepo, AvionRepository avionRepo) {
 		this.letRepo = letRepo;
 		this.avionRepo = avionRepo;
 	}
@@ -71,7 +71,7 @@ public class BrisanjeLetovaController {
 	}
 	
 	@PostMapping("/dodajLet")
-	public ResponseEntity<String> dodajAvionProduct(@RequestBody Let_Form letForm) {
+	public ResponseEntity<String> dodajLetProduct(@RequestBody Let_Form letForm) {
 
 		try {
 			Let let = new Let(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(), letForm.getDuzinaLeta(), letForm.getCena(), letForm.isCanceled());
@@ -99,7 +99,7 @@ public class BrisanjeLetovaController {
 
 	}
 	
-	@PatchMapping("/brisanjeLeta")
+	@PostMapping("/brisanjeLeta")
 	public ResponseEntity<String> brisanjeLeta(@RequestBody Avion_Form avionForm){
 		
 		try {
@@ -119,4 +119,5 @@ public class BrisanjeLetovaController {
 			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 		}
 	}
+	
 }
