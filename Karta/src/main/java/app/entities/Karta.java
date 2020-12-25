@@ -14,8 +14,8 @@ public class Karta {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idKarte;
 
-	private int idUser;
-	private int idLeta;
+	private long idUser;
+	private long idLeta;
 	private LocalDate datumKupovine;
 	private boolean isCanceled;
 
@@ -35,19 +35,19 @@ public class Karta {
 		this.idKarte = idKarte;
 	}
 
-	public int getIdUser() {
+	public long getIdUser() {
 		return idUser;
 	}
 
-	public void setIdUser(int idUser) {
+	public void setIdUser(long idUser) {
 		this.idUser = idUser;
 	}
 
-	public int getIdLeta() {
+	public long getIdLeta() {
 		return idLeta;
 	}
 
-	public void setIdLeta(int idLeta) {
+	public void setIdLeta(long idLeta) {
 		this.idLeta = idLeta;
 	}
 

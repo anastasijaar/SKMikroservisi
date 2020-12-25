@@ -12,7 +12,7 @@ public class Let {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idLeta;
+	private long idLeta;
 	
 	private String pocetnaDestinacija;
 	private String krajnjaDestinacija;
@@ -38,11 +38,11 @@ public class Let {
 		this.isCanceled = isCanceled;
 	}
 
-	public int getIdLeta() {
+	public long getIdLeta() {
 		return idLeta;
 	}
 
-	public void setIdLeta(int idLeta) {
+	public void setIdLeta(long idLeta) {
 		this.idLeta = idLeta;
 	}
 

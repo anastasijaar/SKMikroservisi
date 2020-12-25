@@ -13,7 +13,7 @@ public class Kartica {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idKartice;
+	private long idKartice;
 
 	private String imeVlasnika;
 	private String prezimeVlasnika;
@@ -70,7 +70,7 @@ public class Kartica {
 		return idKartice;
 	}
 
-	public void setIdKartice(int idKartice) {
+	public void setIdKartice(long idKartice) {
 		this.idKartice = idKartice;
 	}
 

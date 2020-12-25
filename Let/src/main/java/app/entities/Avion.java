@@ -13,11 +13,12 @@ public class Avion {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idAviona;
+	private long idAviona;
 	
 	private String nazivAviona;
 	private int kapacitet;
 	private int trenutnoPutnika;
+	private boolean isCancled;
 	
 	@OneToMany(mappedBy = "avion")
     private List<Let> letovi;
@@ -30,13 +31,22 @@ public class Avion {
 		this.nazivAviona = nazivAviona;
 		this.kapacitet = kapacitet;
 		this.trenutnoPutnika = trenutnoPutnika;
+		this.isCancled = false;
 	}
 
-	public int getIdAviona() {
+	public boolean isCancled() {
+		return isCancled;
+	}
+
+	public void setCancled(boolean isCancled) {
+		this.isCancled = isCancled;
+	}
+
+	public long getIdAviona() {
 		return idAviona;
 	}
 
-	public void setIdAviona(int idAviona) {
+	public void setIdAviona(long idAviona) {
 		this.idAviona = idAviona;
 	}
 

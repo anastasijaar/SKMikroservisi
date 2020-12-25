@@ -56,7 +56,8 @@ public class DodavanjeIBrisanjeAviona {
 			List<Let> letovi = letRepo.selectFlightWithPlane(avion);
 			
 			if(letovi.size() == 0) {
-				avionRepo.delete(avion);
+				avion.setCancled(true);
+				avionRepo.save(avion);
 				return new ResponseEntity<>("success", HttpStatus.OK);
 			}
 			return new ResponseEntity<String>("Avion ne moze biti obrisan jer pripada letu.", HttpStatus.OK);

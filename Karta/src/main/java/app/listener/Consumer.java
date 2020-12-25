@@ -1,5 +1,7 @@
 package app.listener;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.annotation.JmsListener;
 import org.springframework.stereotype.Component;
@@ -18,9 +20,11 @@ public class Consumer {
 		this.kartaRepo = kartaRepo;
 	}
 	
-	@JmsListener (destination = "let.queue")
-	public void consume(int id) {
+	@JmsListener (destination = "karta.queue")
+	public void consume(List<Object> lista) {
 		System.out.println("Udje u karta klasu!");
+		long id = (long) lista.get(0);
+		
 		Karta karta = kartaRepo.selectCardByPlaneID(id);
 		
 		if(karta == null) {

@@ -13,7 +13,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idUser;
+	private long idUser;
 
 	private String ime;
 	private String prezime;
@@ -25,6 +25,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
     private List<User_Kartica> kartice;
+    
+    @OneToMany(mappedBy = "user")
+    private List<User_Letovi> letovi;
     
 	public User() {
 
@@ -39,6 +42,14 @@ public class User {
 		this.predjeneMilje = predjeneMilje;
 		this.brojPasosa = brojPasosa;
 		this.rank = TipRanka.BRONZA;
+	}
+		
+	public List<User_Letovi> getLetovi() {
+		return letovi;
+	}
+
+	public void setLetovi(List<User_Letovi> letovi) {
+		this.letovi = letovi;
 	}
 
 	public void setRank(TipRanka rank) {
@@ -101,7 +112,7 @@ public class User {
 		return idUser;
 	}
 
-	public void setIdUser(int idUser) {
+	public void setIdUser(long idUser) {
 		this.idUser = idUser;
 	}
 

@@ -10,7 +10,7 @@ import app.entities.Avion;
 import app.entities.Let;
 
 @Repository
-public interface LetRepository extends JpaRepository<Let, Integer>{
+public interface LetRepository extends JpaRepository<Let, Long>{
 
 	//Selekcija leta po imenu aviona
 	@Query("select l from Let l where l.avion.nazivAviona like :ime")

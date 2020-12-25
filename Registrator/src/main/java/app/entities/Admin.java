@@ -10,7 +10,7 @@ public class Admin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idAdmina;
+	private long idAdmina;
 	
 	private String email;
 	private String password;
@@ -24,11 +24,11 @@ public class Admin {
 		this.password = password;
 	}
 
-	public int getIdAdmina() {
+	public long getIdAdmina() {
 		return idAdmina;
 	}
 
-	public void setIdAdmina(int idAdmina) {
+	public void setIdAdmina(long idAdmina) {
 		this.idAdmina = idAdmina;
 	}
 

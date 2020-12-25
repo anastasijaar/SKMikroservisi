@@ -4,6 +4,7 @@ import static app.security.SecurityConstants.ADMIN_SECRET;
 import static app.security.SecurityConstants.ADMIN_TOKEN_PREFIX;
 import static app.security.SecurityConstants.HEADER_STRING;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.jms.Queue;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +39,10 @@ public class DodavanjeIBrisanjeLetovaController {
 	JmsTemplate jmsTemplate;
 
 	@Autowired
-	Queue letQue;
+	Queue kartaQue;
+	
+	@Autowired
+	Queue userQue;
 	
 	private LetRepository letRepo;
 	
@@ -106,12 +109,21 @@ public class DodavanjeIBrisanjeLetovaController {
 			String imeAviona = avionForm.getNazivAviona();
 			Let let = letRepo.selectFlightByPlaneName(imeAviona);
 			
-			int idLeta = let.getIdLeta();
+			long idLeta = let.getIdLeta();
+			int milje = let.getDuzinaLeta();
+			
+			List<Object> lista = new ArrayList<Object>();
+			lista.add(idLeta);
+			lista.add(milje);
 			
 			let.setCanceled(true);
 			letRepo.save(let);
 			
-			jmsTemplate.convertAndSend(letQue, idLeta);
+			//Saljemo poruku ka servisu za karte
+			jmsTemplate.convertAndSend(kartaQue, lista);
+			
+			//Saljemo poruku ka servisu za usere
+			//jmsTemplate.convertAndSend(userQue, lista);
 			
 			return new ResponseEntity<String>("Let uspesno obrisan", HttpStatus.ACCEPTED);
 		}catch (Exception e) {
