@@ -29,14 +29,10 @@ public class PretrazivanjeLetovaController {
 		try {
 			List<Let> let = letRepo.searchLetByParameters(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(),
 					letForm.getCena(), letForm.getDuzinaLeta(), letForm.isCanceled());
-			String sviLetovi = "";
 			
 			List<ResponseEntity<Let_Form>> responseEntiteti = new ArrayList<ResponseEntity<Let_Form>>();
 			
 			for (Let l : let) {
-				/*System.out.println(l.getPocetnaDestinacija() + "\n");
-				sviLetovi += l.getPocetnaDestinacija();
-				sviLetovi += "\n";*/
 				responseEntiteti.add(new ResponseEntity<>(new Let_Form(l.getPocetnaDestinacija(), l.getKrajnjaDestinacija(),
 						l.getCena(), l.getDuzinaLeta(), l.isCanceled()), HttpStatus.OK));
 			}
