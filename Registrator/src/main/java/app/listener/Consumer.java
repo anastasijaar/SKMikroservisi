@@ -92,8 +92,8 @@ public class Consumer {
 			message.setRecipient(Message.RecipientType.TO, new InternetAddress(to));
 			message.setSubject("Povracaj novca!");
 			message.setText("Postovani/a " + ime + ",\n\nObavestavamo Vas da je uradjen povracaj novca zbog otkazivanja leta.\n"
-										+ "Predjene milje i rank pre otkazivanja leta:\n " + "Milje: " + milje + "\nRank: " + rank 
-										+ "\\n\nPredjene milje i rank nakon otkazivanja leta:\n " + "Milje: " + oduzeteMilje + "\nRank: " + noviRank);
+										+ "\nPredjene milje i rank pre otkazivanja leta:\n" + "\tMilje: " + milje + "\n\tRank: " + rank 
+										+ "\n\nPredjene milje i rank nakon otkazivanja leta:\n" + "\\tMilje: " + oduzeteMilje + "\n\tRank: " + noviRank);
 			System.out.println("Poslao poruku");
 			return message;
 			
