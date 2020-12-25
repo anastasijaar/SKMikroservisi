@@ -31,18 +31,19 @@ public class Consumer {
 	}
 
 	@JmsListener (destination = "user.queue")
-	public void consume(List<Object> lista){
+	public void consume(List<Object> lista) throws Exception{
 		
 		//Nadjem sve usere koji idu na prosledjeni let
 		long idLeta = (long) lista.get(0);
 		
 		List<User> useri = userRepo.findAllUsersThatGoOnFlight(idLeta);
+		System.out.println("Nasao je usera : "+ useri.size());
 		
 		int miljeZaOduzeti = (int) lista.get(1);
 		
-		/*for (User user : useri) {
+		for (User user : useri) {
 			sendMail(user.getEmail(), user.getIme(), user.getRank(), user.getPredjeneMilje(), miljeZaOduzeti);
-		}*/
+		}
 	}
 	
 	public static void sendMail(String to, String ime, TipRanka rank, int milje, int miljeZaOduzeti) throws Exception {

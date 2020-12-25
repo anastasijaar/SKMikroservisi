@@ -110,6 +110,7 @@ public class DodavanjeIBrisanjeLetovaController {
 			Let let = letRepo.selectFlightByPlaneName(imeAviona);
 			
 			long idLeta = let.getIdLeta();
+			System.out.println("2134 idleta je "+ idLeta);
 			int milje = let.getDuzinaLeta();
 			
 			List<Object> lista = new ArrayList<Object>();
@@ -123,7 +124,7 @@ public class DodavanjeIBrisanjeLetovaController {
 			jmsTemplate.convertAndSend(kartaQue, lista);
 			
 			//Saljemo poruku ka servisu za usere
-			//jmsTemplate.convertAndSend(userQue, lista);
+			jmsTemplate.convertAndSend(userQue, lista);
 			
 			return new ResponseEntity<String>("Let uspesno obrisan", HttpStatus.ACCEPTED);
 		}catch (Exception e) {
