@@ -1,5 +1,6 @@
 package app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,25 @@ public class PretrazivanjeLetovaController {
 
 	
 	@PostMapping("/pretrazivanjeLetova")
-	public ResponseEntity<String> karticaPost(@RequestBody Let_Form letForm) {
+	public ResponseEntity<List<ResponseEntity<Let_Form>>> karticaPost(@RequestBody Let_Form letForm) {
 		
 		try {
 			List<Let> let = letRepo.searchLetByParameters(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(),
 					letForm.getCena(), letForm.getDuzinaLeta(), letForm.isCanceled());
+			String sviLetovi = "";
+			
+			List<ResponseEntity<Let_Form>> responseEntiteti = new ArrayList<ResponseEntity<Let_Form>>();
 			
 			for (Let l : let) {
-				System.out.println(l.getPocetnaDestinacija() + "\n");
+				/*System.out.println(l.getPocetnaDestinacija() + "\n");
+				sviLetovi += l.getPocetnaDestinacija();
+				sviLetovi += "\n";*/
+				responseEntiteti.add(new ResponseEntity<>(new Let_Form(l.getPocetnaDestinacija(), l.getKrajnjaDestinacija(),
+						l.getCena(), l.getDuzinaLeta(), l.isCanceled()), HttpStatus.OK));
 			}
 			
-			return new ResponseEntity<>("success", HttpStatus.OK);
+			return new ResponseEntity<>(responseEntiteti, HttpStatus.OK);
+			//return new ResponseEntity<>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
