@@ -9,7 +9,7 @@ import app.entities.Avion;
 @Repository
 public interface AvionRepository extends JpaRepository<Avion, Long>{
 
-	Avion findByIdAviona(int idAviona);
+	Avion findByIdAviona(long idAviona);
 	
 	
 }

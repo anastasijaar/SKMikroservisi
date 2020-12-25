@@ -50,7 +50,7 @@ public class DodavanjeIBrisanjeAviona {
 	public ResponseEntity<String> brisanjeAvionaPost(@RequestBody Avion_Form avionForm) {
 		try {
 			
-			int idAviona = avionForm.getIdAviona();
+			long idAviona = avionForm.getIdAviona();
 			Avion avion = avionRepo.findByIdAviona(idAviona);
 			
 			List<Let> letovi = letRepo.selectFlightWithPlane(avion);

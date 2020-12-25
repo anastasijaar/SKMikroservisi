@@ -66,10 +66,26 @@ public class Controller {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			}
 
+			int milje = registrationForm.getPredjeneMilje();
+			TipRanka rank;
+			
 			// iscitavamo entitet iz registracione forme
 			User user = new User(registrationForm.getIme(), registrationForm.getPrezime(), registrationForm.getEmail(),
-					encoder.encode(registrationForm.getPassword()),registrationForm.getPredjeneMilje(), registrationForm.getBrojPasosa());
+					encoder.encode(registrationForm.getPassword()),milje, registrationForm.getBrojPasosa());
 
+			if(milje < 1000) {
+				rank = TipRanka.BRONZA;
+			}
+			else if(milje >= 1000 && milje < 10000) {
+				rank = TipRanka.SREBRO;
+			}
+			else
+			{
+				rank = TipRanka.ZLATO;
+			}
+			
+			user.setRank(rank);
+			
 			// cuvamo u nasoj bazi ovaj entitet
 			userRepo.saveAndFlush(user);
 

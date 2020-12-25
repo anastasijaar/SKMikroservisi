@@ -41,12 +41,31 @@ public class Consumer {
 		
 		int miljeZaOduzeti = (int) lista.get(1);
 		
+		TipRanka noviRank;
+		int oduzeteMilje = 0;
+		
 		for (User user : useri) {
-			sendMail(user.getEmail(), user.getIme(), user.getRank(), user.getPredjeneMilje(), miljeZaOduzeti);
+			oduzeteMilje = user.getPredjeneMilje() - miljeZaOduzeti;
+			if(oduzeteMilje < 1000) {
+				noviRank = TipRanka.BRONZA;
+			}
+			else if(oduzeteMilje >= 1000 && oduzeteMilje < 10000) {
+				noviRank = TipRanka.SREBRO;
+			}
+			else
+			{
+				noviRank = TipRanka.ZLATO;
+			}
+			sendMail(user.getEmail(), user.getIme(), user.getRank(), user.getPredjeneMilje(), miljeZaOduzeti, oduzeteMilje, noviRank);
+			user.setPredjeneMilje(user.getPredjeneMilje() - miljeZaOduzeti);
+			user.setRank(noviRank);
+			userRepo.save(user);
 		}
+		
+		
 	}
 	
-	public static void sendMail(String to, String ime, TipRanka rank, int milje, int miljeZaOduzeti) throws Exception {
+	public static void sendMail(String to, String ime, TipRanka rank, int milje, int miljeZaOduzeti, int oduzeteMilje, TipRanka noviRank) throws Exception {
 		Properties properties = new Properties();
 		
 		properties.put("mail.smtp.auth", "true");
@@ -65,27 +84,15 @@ public class Consumer {
 			}
 		});
 		
-		Message message = prepareMessage(session, myAccountEmail, to, ime, rank, milje, miljeZaOduzeti);
+		Message message = prepareMessage(session, myAccountEmail, to, ime, rank, milje, miljeZaOduzeti, oduzeteMilje, noviRank);
 		
 		Transport.send(message);
 	}
 	
 	//Pravimo poruku
-	private static Message prepareMessage(Session session, String myAccountEmail, String to, String ime, TipRanka rank, int milje, int miljeZaOduzeti) {
+	private static Message prepareMessage(Session session, String myAccountEmail, String to, String ime, TipRanka rank, int milje, int miljeZaOduzeti,int oduzeteMilje, TipRanka noviRank) {
 		try {
-			int oduzeteMilje = milje - miljeZaOduzeti;
 			
-			TipRanka noviRank;
-			if(milje < 1000) {
-				noviRank = TipRanka.BRONZA;
-			}
-			else if(milje >= 1000 && milje < 10000) {
-				noviRank = TipRanka.SREBRO;
-			}
-			else
-			{
-				noviRank = TipRanka.ZLATO;
-			}
 			
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(myAccountEmail));
@@ -93,8 +100,8 @@ public class Consumer {
 			message.setSubject("Povracaj novca!");
 			message.setText("Postovani/a " + ime + ",\n\nObavestavamo Vas da je uradjen povracaj novca zbog otkazivanja leta.\n"
 										+ "\nPredjene milje i rank pre otkazivanja leta:\n" + "\tMilje: " + milje + "\n\tRank: " + rank 
-										+ "\n\nPredjene milje i rank nakon otkazivanja leta:\n" + "\\tMilje: " + oduzeteMilje + "\n\tRank: " + noviRank);
-			System.out.println("Poslao poruku");
+										+ "\n\nPredjene milje i rank nakon otkazivanja leta:\n" + "\tMilje: " + oduzeteMilje + "\n\tRank: " + noviRank
+										+"\n\nHvala Vam na razumevanju,\n\nVas FlyWithRAF.");
 			return message;
 			
 		} catch (Exception e) {

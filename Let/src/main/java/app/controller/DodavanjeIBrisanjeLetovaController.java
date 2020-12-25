@@ -108,6 +108,9 @@ public class DodavanjeIBrisanjeLetovaController {
 		try {
 			String imeAviona = avionForm.getNazivAviona();
 			Let let = letRepo.selectFlightByPlaneName(imeAviona);
+			if(let == null) {
+				return new ResponseEntity<String> ("Let ne postoji.",HttpStatus.BAD_REQUEST);
+			}
 			
 			long idLeta = let.getIdLeta();
 			System.out.println("2134 idleta je "+ idLeta);
