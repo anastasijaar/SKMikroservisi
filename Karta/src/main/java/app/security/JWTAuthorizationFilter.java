@@ -52,8 +52,8 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 		if (token != null) {
 			// parsiranje tokena
-			DecodedJWT jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
-					.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
+			DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+					.verify(token.replace(TOKEN_PREFIX, ""));
 			
 			// subject je email od korisnika i spakovan je u JWT
 			String email = jwt.getSubject();

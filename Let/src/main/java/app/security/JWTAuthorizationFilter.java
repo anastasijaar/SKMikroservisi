@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,6 +22,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import app.repository.AvionRepository;
+import app.utils.UtilsMethods;
 
 /**
  * Autorizacioja sluzi da proveri validnost JSON Web Tokena koji se nalazi u
@@ -51,13 +53,20 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
 
 		if (token != null) {
-			// parsiranje tokena
-			/*DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
-					.verify(token.replace(TOKEN_PREFIX, ""));*/
 			
-			DecodedJWT jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
-			.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
-
+			DecodedJWT jwt = null;
+			
+			if(token.startsWith("Basic ")) {
+				// parsiranje tokena
+				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+						.verify(token.replace(TOKEN_PREFIX, ""));
+			}
+			else
+			{
+				jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
+						.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
+			}
+			
 			// subject je email od korisnika i spakovan je u JWT
 			String email = jwt.getSubject();
 
@@ -69,8 +78,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			if (email != null) {
 				return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
 			}
-			
-							
 			return null;
 		}
 		return null;
