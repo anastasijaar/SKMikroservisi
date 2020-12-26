@@ -253,10 +253,10 @@ public class Controller {
 	public ResponseEntity<String> dodavanjeMiljaPut(@RequestBody Rank_Form rankForm, @RequestHeader(value = HEADER_STRING) String token){
 		
 		try {
-			
+				
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
-
+			
 			User user = userRepo.findByEmail(email);
 			
 			int milje = rankForm.getMilje();
