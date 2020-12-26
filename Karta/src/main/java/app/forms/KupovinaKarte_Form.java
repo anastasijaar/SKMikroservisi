@@ -1,26 +1,13 @@
 package app.forms;
 
-
 public class KupovinaKarte_Form {
 
-	private int idUser;
-	private int idLeta;
-
-	public int getIdUser() {
-		return idUser;
+	private long idKartice;
+	
+	public long getIdKartice() {
+		return idKartice;
 	}
-
-	public void setIdUser(int idUser) {
-		this.idUser = idUser;
+	public void setIdKartice(long idKartice) {
+		this.idKartice = idKartice;
 	}
-
-	public int getIdLeta() {
-		return idLeta;
-	}
-
-	public void setIdLeta(int idLeta) {
-		this.idLeta = idLeta;
-	}
-
-
 }

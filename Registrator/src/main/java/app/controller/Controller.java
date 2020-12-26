@@ -1,5 +1,7 @@
 package app.controller;
 
+import static app.security.SecurityConstants.ADMIN_SECRET;
+import static app.security.SecurityConstants.ADMIN_TOKEN_PREFIX;
 import static app.security.SecurityConstants.HEADER_STRING;
 import static app.security.SecurityConstants.SECRET;
 import static app.security.SecurityConstants.TOKEN_PREFIX;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.interfaces.DecodedJWT;
 
 import app.entities.Kartica;
 import app.entities.TipRanka;
@@ -29,6 +32,7 @@ import app.forms.Kartica_Form;
 import app.forms.Rank_Form;
 import app.forms.RegistrationForm;
 import app.forms.UrediProfil_Form;
+import app.repository.AdminRepository;
 import app.repository.KarticaRepository;
 import app.repository.UserRepository;
 import app.repository.User_KarticaRepository;
@@ -46,13 +50,16 @@ public class Controller {
 	private UserRepository userRepo;
 	private KarticaRepository karticaRepo;
 	private User_KarticaRepository userKarticaRepo;
+	private AdminRepository adminRepo;
 
 	@Autowired
-	public Controller(BCryptPasswordEncoder encoder, UserRepository userRepo, KarticaRepository karticaRepo, User_KarticaRepository userKarticaRepo) {
+	public Controller(BCryptPasswordEncoder encoder, UserRepository userRepo, KarticaRepository karticaRepo, User_KarticaRepository userKarticaRepo
+			,AdminRepository adminRepo) {
 		this.encoder = encoder;
 		this.userRepo = userRepo;
 		this.karticaRepo = karticaRepo;
 		this.userKarticaRepo = userKarticaRepo;
+		this.adminRepo = adminRepo;
 	}
 
 	@PostMapping("/register")
@@ -283,6 +290,34 @@ public class Controller {
 		}
 	}
 	
-
+	@GetMapping("/proveraTokena")
+	public ResponseEntity<String> proveraTokena(@RequestHeader(value = HEADER_STRING) String token) {
+		try {
+			boolean flag = false;
+			DecodedJWT jwt = null;
+			if(token.startsWith("Basic ")) {
+				// parsiranje tokena
+				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+						.verify(token.replace(TOKEN_PREFIX, ""));
+				String email = jwt.getSubject();
+				if(userRepo.existsByEmail(email)) {
+					return new ResponseEntity<>(token, HttpStatus.OK);
+				}
+			}
+			else
+			{
+				jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
+						.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
+				String email = jwt.getSubject();
+				if(adminRepo.existsByEmail(email)) {
+					return new ResponseEntity<>(token, HttpStatus.OK);
+				}
+			}
+			return null;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 }
