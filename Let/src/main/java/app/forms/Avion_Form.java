@@ -2,7 +2,7 @@ package app.forms;
 
 public class Avion_Form {
 
-	private int idAviona;
+	private long idAviona;
 	private String nazivAviona;
 	private int kapacitet;
 	private int trenutnoPutnika;
@@ -31,11 +31,11 @@ public class Avion_Form {
 		this.trenutnoPutnika = trenutnoPutnika;
 	}
 
-	public int getIdAviona() {
+	public long getIdAviona() {
 		return idAviona;
 	}
 
-	public void setIdAviona(int idAviona) {
+	public void setIdAviona(long idAviona) {
 		this.idAviona = idAviona;
 	}
 

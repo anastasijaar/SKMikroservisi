@@ -79,7 +79,7 @@ public class DodavanjeIBrisanjeLetovaController {
 		try {
 			Let let = new Let(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(), letForm.getDuzinaLeta(), letForm.getCena(), letForm.isCanceled());
 
-			int idAviona = letForm.getIdAviona();
+			long idAviona = letForm.getIdAviona();
 
 			//Trazimo avion u bazi podataka, da bi ga dodali na let
 			Avion avion = avionRepo.findByIdAviona(idAviona);

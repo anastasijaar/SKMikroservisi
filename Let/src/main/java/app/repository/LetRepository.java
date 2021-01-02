@@ -1,16 +1,18 @@
 package app.repository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import app.entities.Avion;
 import app.entities.Let;
 
 @Repository
-public interface LetRepository extends JpaRepository<Let, Long>{
+public interface LetRepository extends JpaRepository<Let, Long>, PagingAndSortingRepository<Let, Long>{
 
 	//Selekcija leta po imenu aviona
 	@Query("select l from Let l where l.avion.nazivAviona like :ime")
@@ -30,4 +32,12 @@ public interface LetRepository extends JpaRepository<Let, Long>{
 	//provera da li avion pripada nekom letu
 	@Query("select l from Let l where l.avion like :avion")
 	List<Let> selectFlightWithPlane(Avion avion);
+	
+	//paginacija letova
+	@Query("select l from Let l where l.cena like :cena or l.pocetnaDestinacija like :pocetnaDestinacija or l.krajnjaDestinacija like :krajnjaDestinacija or l.duzinaLeta like :duzinaLeta or l.avion.idAviona like :idAviona")
+	List<Let> paginacijaByParameters(int cena, String pocetnaDestinacija, String krajnjaDestinacija, int duzinaLeta, long idAviona, Pageable pageable);
+		
+	
+	List<Let> findAllByCena(int cena, Pageable pageable);
+	
 }
