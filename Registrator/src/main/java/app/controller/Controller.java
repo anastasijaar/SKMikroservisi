@@ -261,6 +261,7 @@ public class Controller {
 		
 		try {
 				
+			
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
 			
