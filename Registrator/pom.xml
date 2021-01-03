@@ -19,18 +19,23 @@
 	</properties>
 
 	<dependencies>
-	
 		<!--  ActiveMQ Dependency -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-activemq</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+			<version>2.2.2.RELEASE</version>
 		</dependency>
 	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
+	
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -39,6 +44,7 @@
 		</dependency>
 		
 		<!-- **************************************************************************** -->
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -74,7 +80,6 @@
 			</exclusions>
 			
 		</dependency>
-		
 	</dependencies>
 
 	<build>
@@ -85,5 +90,7 @@
 			</plugin>
 		</plugins>
 	</build>
+	
+	
 
 </project>
