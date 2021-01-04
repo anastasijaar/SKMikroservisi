@@ -152,17 +152,27 @@ public class Controller {
 	}
 
 	@GetMapping("/whoAmI")
-	public ResponseEntity<String> whoAmI(@RequestHeader(value = HEADER_STRING) String token) {
+	public ResponseEntity<Boolean> whoAmI(@RequestHeader(value = HEADER_STRING) String token) {
+		System.out.println("pre trya");
 		try {
-
+			System.out.println("u trya");
 			// izvlacimo iz tokena subject koj je postavljen da bude email
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
-
+			
 			User user = userRepo.findByEmail(email);
-
-			return new ResponseEntity<>(user.getIme() + " " + user.getPrezime(), HttpStatus.OK);
+			boolean userExist = userRepo.existsByEmail(email);
+			
+			if(userExist == true) {
+				return new ResponseEntity<>(true, HttpStatus.OK);
+			}
+			else 
+			{
+				return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+			}
 		} catch (Exception e) {
+			System.out.println("u catch");
+
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

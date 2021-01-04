@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,9 +58,13 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			DecodedJWT jwt = null;
 			
 			if(token.startsWith("Basic ")) {
+				
 				// parsiranje tokena
 				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 						.verify(token.replace(TOKEN_PREFIX, ""));
+				System.out.println("Token je: "+ jwt);
+//				HttpHeaders headers = token;
+//				ResponseEntity<Boolean> response =  UtilsMethods.sendGet(url)
 			}
 			else
 			{
@@ -69,11 +74,6 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			
 			// subject je email od korisnika i spakovan je u JWT
 			String email = jwt.getSubject();
-
-			// Provera da li se nalazi user u bazi
-			/*if (avionRepo.existsByEmail(email) == false) {
-				return null;
-			}*/
 
 			if (email != null) {
 				return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());

@@ -11,18 +11,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import app.repository.AvionRepository;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	private PasswordEncoder encoder;
-	private AvionRepository avionRepo;
 
 	@Autowired
-	public CustomAuthenticationProvider(AvionRepository avionRepo) {
+	public CustomAuthenticationProvider() {
 		super();
-		this.avionRepo = avionRepo;
 	}
 
 	@Override
@@ -30,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		String email = auth.getName();
 		String password = auth.getCredentials().toString();
 
-		/*Avion user = userRepo.findByEmail(email);
+		/*User user = userRepo.findByEmail(email);
 
 		if (user == null) {
 			throw new BadCredentialsException("Authentication failed");
