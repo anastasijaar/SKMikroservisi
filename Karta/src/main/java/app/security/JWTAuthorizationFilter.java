@@ -11,10 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -57,16 +62,31 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			
 			// subject je email od korisnika i spakovan je u JWT
 			String email = jwt.getSubject();
+			
+			
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.add(HttpHeaders.AUTHORIZATION, token);
+			HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
+			ResponseEntity<Boolean> response = restTemplate.exchange("http://localhost:8080/whoAmI", HttpMethod.GET, entity, Boolean.class);
+			if(response.hasBody()) {
+				if(response.getBody() == true) {
+					return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
+				}else {
+					return null;
+				}
+			}else
+				return null;
 			// Provera da li se nalazi user u bazi
 			/*if (userRepo.existsByEmail(email) == false) {
 				return null;
 			}*/
 
-			if (email != null) {
+			/*if (email != null) {
 				return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
 			}
-			return null;
+			return null;*/
 		}
 		return null;
 	}
