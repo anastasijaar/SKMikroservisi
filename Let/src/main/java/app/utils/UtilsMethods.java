@@ -19,6 +19,20 @@ public class UtilsMethods {
 
 		return response;
 	}
+	
+	
+	public static ResponseEntity<Boolean> sendGet(String url, String token) {
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Autorization", token);
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+
+		ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.GET, entity, Boolean.class);
+
+		return response;
+	}
+
 
 	public static ResponseEntity<Integer> sendPost(String url, Object body) {
 

@@ -63,8 +63,9 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 						.verify(token.replace(TOKEN_PREFIX, ""));
 				System.out.println("Token je: "+ jwt);
-//				HttpHeaders headers = token;
-//				ResponseEntity<Boolean> response =  UtilsMethods.sendGet(url)
+				
+//				ResponseEntity<Boolean> response =  UtilsMethods.sendGet("http://localhost:8080/whoAmI", token);
+//				System.out.println("Korisnik postoji: "+response);
 			}
 			else
 			{
