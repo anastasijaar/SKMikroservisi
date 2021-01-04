@@ -27,7 +27,7 @@ public class UtilsMethods {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Autorization", token);
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-
+		
 		ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.GET, entity, Boolean.class);
 
 		return response;

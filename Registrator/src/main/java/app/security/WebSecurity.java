@@ -37,8 +37,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		this.encoder = encoder;
 		this.adminRepo = adminRepo;
 		//Kreiramo admina
-		Admin admin = new Admin("admin", encoder.encode("admin"));
-		adminRepo.saveAndFlush(admin);
+//		Admin admin = new Admin("admin", encoder.encode("admin"));
+//		adminRepo.saveAndFlush(admin);
 	}
 
 	@Override

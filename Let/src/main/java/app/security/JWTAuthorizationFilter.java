@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -54,25 +57,41 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
 
 		if (token != null) {
-			
+
 			DecodedJWT jwt = null;
-			
-			if(token.startsWith("Basic ")) {
-				
+
+			if (token.startsWith("Basic ")) {
+
 				// parsiranje tokena
-				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
-						.verify(token.replace(TOKEN_PREFIX, ""));
-				System.out.println("Token je: "+ jwt);
+				jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build().verify(token.replace(TOKEN_PREFIX, ""));
+				System.out.println("Token je: " + jwt);
 				
-//				ResponseEntity<Boolean> response =  UtilsMethods.sendGet("http://localhost:8080/whoAmI", token);
-//				System.out.println("Korisnik postoji: "+response);
-			}
-			else
-			{
+				String email = jwt.getSubject();
+				
+				RestTemplate restTmp = new RestTemplate();
+				HttpHeaders headers = new HttpHeaders();
+				headers.add(HttpHeaders.AUTHORIZATION, token);
+				HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+				ResponseEntity<Boolean> response = restTmp.exchange("http://localhost:8080/whoAmI", HttpMethod.GET,
+						entity, Boolean.class);
+				if (response.hasBody()) {
+					if (response.getBody() == true) {
+						return new UsernamePasswordAuthenticationToken(email, null, new ArrayList<>());
+					} else {
+						return null;
+					}
+				}
+				else
+				{
+					return null;
+				}
+					
+
+			} else {
 				jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
 						.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
 			}
-			
+
 			// subject je email od korisnika i spakovan je u JWT
 			String email = jwt.getSubject();
 

@@ -21,6 +21,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import app.entities.Let;
 import app.forms.Let_Form;
 import app.repository.LetRepository;
+import app.utils.UtilsMethods;
 
 @RestController
 public class PretrazivanjeLetovaController {
@@ -36,7 +37,9 @@ public class PretrazivanjeLetovaController {
 		
 		try {
 			
+			
 			if(token.startsWith("Basic ")) {
+				
 				List<ResponseEntity<Let_Form>> responseEntiteti = new ArrayList<ResponseEntity<Let_Form>>();
 				
 				List<Let> let = letRepo.searchLetByParameters(letForm.getPocetnaDestinacija(), letForm.getKrajnjaDestinacija(),
