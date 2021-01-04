@@ -1,15 +1,13 @@
-package GUI.client;
-
-import org.springframework.stereotype.Component;
-
-import javafx.fxml.FXMLLoader;
+package Clinet.client;
 
 import java.net.URL;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 
+import javafx.fxml.FXMLLoader;
 
 @Component
 public class ContextFXMLLoader {

@@ -1,26 +1,26 @@
-package GUI;
+package Client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import Clinet.client.MainViewManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import GUI.client.MainViewManager;
 
 @SpringBootApplication
-public class GuiApplication extends Application {
+public class ClientApplication extends Application{
 	
 	protected ConfigurableApplicationContext springContext;
 
 	public static void main(String[] args) {
-		launch(GuiApplication.class);
+		launch(ClientApplication.class);
 	}
 
 	@Override
 	public void init() {
-		springContext = SpringApplication.run(GuiApplication.class);
+		springContext = SpringApplication.run(ClientApplication.class);
 		
 	}
 	
