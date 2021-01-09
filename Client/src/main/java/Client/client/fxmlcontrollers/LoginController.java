@@ -28,25 +28,23 @@ public class LoginController {
 	MainViewManager mainViewManager;
 
 	public void handleLogIn(ActionEvent event) {
+		ResponseEntity<String> response = null;
 		try {
-
 			if (emailTf.getText().equals("") || passwordTf.getText().equals("")) {
 				actionTarget.setText("Svi podaci moraju biti popunjeni !");
 			}
 
 			String url = "http://localhost:8762/rest-service-1/login";
 
-			Login_Form loginForm = new Login_Form();
-			loginForm.setPassword(passwordTf.getText());
-			loginForm.setEmail(emailTf.getText());
+			Login_Form loginForm = new Login_Form(emailTf.getText(), passwordTf.getText());
 			
-			ResponseEntity<String> response = UtilsMethods.sendPostString(url, loginForm);
+			response = UtilsMethods.sendPostString(url, loginForm);
 			
 			String token = response.getHeaders().get("Authorization").get(0);
 			
-			if(token.startsWith("Admin ")) {
-				System.out.println("Admin je");
-				mainViewManager.changeRoot("adminListaLetova");
+			if(token.startsWith("Basic ")) {
+				System.out.println("Prefiks je: ");
+				mainViewManager.openModal("adminListaLetova");
 			}
 
 		} catch (Exception e) {
@@ -56,3 +54,37 @@ public class LoginController {
 	}
 
 }
+
+
+/*
+ <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+          <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+         <children>
+            <TableView fx:id="listaLetovi">
+              <columns>
+                  <TableColumn prefWidth="100.0" text="Pocetna Destinacija">
+                 <cellValueFactory><PropertyValueFactory property="pocetnaDestinacija" />
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="100.0" text="Krajnja Destinacija">
+                 <cellValueFactory><PropertyValueFactory property="krajnjaDestinacija" />
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Duzina Leta">
+                 <cellValueFactory><PropertyValueFactory property="duzinaLeta" />
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="150.0" text="Cena">
+                 <cellValueFactory><PropertyValueFactory property="cena" />
+                </cellValueFactory>
+                </TableColumn>
+                <TableColumn prefWidth="100.0" text="Avion">
+                 <cellValueFactory><PropertyValueFactory property="avion" />
+                </cellValueFactory>
+                </TableColumn>
+              </columns>
+            </TableView>
+         </children>
+      </VBox>*/

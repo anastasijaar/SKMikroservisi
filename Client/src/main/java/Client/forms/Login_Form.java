@@ -5,6 +5,12 @@ public class Login_Form {
 	private String email;
 	private String password;
 
+	public Login_Form(String email, String password) {
+		super();
+		this.email = email;
+		this.password = password;
+	}
+
 	public String getEmail() {
 		return email;
 	}

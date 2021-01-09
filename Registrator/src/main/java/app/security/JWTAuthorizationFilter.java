@@ -52,7 +52,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 	}
 
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request, String token) {
-
+		System.out.println("Test123");
 		if (token != null) {
 			// parsiranje tokena
 			DecodedJWT jwt = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()

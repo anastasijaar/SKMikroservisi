@@ -60,10 +60,11 @@ public class UtilsMethods {
 	}
 	
 	public static ResponseEntity<String> sendPostString(String url, Object body) {
-
+		
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
-
+		headers.add("Content-Type", "application/json");
+		
 		HttpEntity<Object> entity = new HttpEntity<Object>(body, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);

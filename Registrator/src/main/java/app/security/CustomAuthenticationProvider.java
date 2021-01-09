@@ -39,15 +39,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		if (user != null && encoder.matches(password, user.getPassword())) {
 			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
-			//throw new BadCredentialsException("Authentication failed");
 			
 		}
 
-		// proveri sifru
-		/*if (encoder.matches(password, user.getPassword())) {
-			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
-		}*/
-		
 		Admin admin = adminRepo.findByEmail(email);
 		
 		if(admin == null) {
