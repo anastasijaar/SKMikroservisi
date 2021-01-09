@@ -1,4 +1,4 @@
-package Clinet.client;
+package Client.client;
 
 import java.io.IOException;
 
@@ -20,11 +20,10 @@ public class MainViewManager {
 	
 	private Scene scene;
 	
-	private Stage mainStage;
 	
 	public Scene createScene() {	  
 	  try {		  
-		  FXMLLoader loader = appFXMLLoader.getLoader(MainViewManager.class.getResource("/fxml/main.fxml"));
+		  FXMLLoader loader = appFXMLLoader.getLoader(MainViewManager.class.getResource("/fxml/Login.fxml"));
 		  BorderPane borderPane = loader.load();
 		  this.scene = new Scene(borderPane);			  
 	  } catch (IOException e) {
@@ -68,13 +67,5 @@ public class MainViewManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	//za import podataka
-	public void setMainStage(Stage stage) {
-		this.mainStage = stage;
-	}
-	
-	public Stage getMainStage() {
-		return this.mainStage;
 	}
 }

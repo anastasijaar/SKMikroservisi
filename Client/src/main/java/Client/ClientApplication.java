@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import Clinet.client.MainViewManager;
+import Client.client.MainViewManager;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -26,12 +26,10 @@ public class ClientApplication extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("RAF studentska sluzba");
-		MainViewManager mainView = springContext.getBean(MainViewManager.class);
-		//setovanje stage-a za import podataka
-		mainView.setMainStage(primaryStage);
-		primaryStage.setScene(mainView.createScene());
-		primaryStage.show();
+		primaryStage.setTitle("LogIn");
+    	MainViewManager mainView = springContext.getBean(MainViewManager.class);    	
+    	primaryStage.setScene(mainView.createScene());
+    	primaryStage.show();
 	}
 
 	@Override

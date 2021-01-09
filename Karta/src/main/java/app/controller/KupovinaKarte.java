@@ -43,7 +43,7 @@ public class KupovinaKarte {
 			HttpHeaders headers = token;
 			
 			System.out.println("Header je: "+ headers);
-			ResponseEntity<String> response = UtilsMethods.sendGet("http://localhost:8080/kupovinaKarte", headers);
+			ResponseEntity<String> response = UtilsMethods.sendGet("http://localhost:8084/kupovinaKarte", headers);
 
 			return response;
 		}catch (Exception e) {

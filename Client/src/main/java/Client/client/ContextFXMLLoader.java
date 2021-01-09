@@ -1,4 +1,4 @@
-package Clinet.client;
+package Client.client;
 
 import java.net.URL;
 

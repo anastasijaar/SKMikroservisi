@@ -72,7 +72,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 				HttpHeaders headers = new HttpHeaders();
 				headers.add(HttpHeaders.AUTHORIZATION, token);
 				HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-				ResponseEntity<Boolean> response = restTmp.exchange("http://localhost:8080/whoAmI", HttpMethod.GET,
+				ResponseEntity<Boolean> response = restTmp.exchange("http://localhost:8084/whoAmI", HttpMethod.GET,
 						entity, Boolean.class);
 				if (response.hasBody()) {
 					if (response.getBody() == true) {
