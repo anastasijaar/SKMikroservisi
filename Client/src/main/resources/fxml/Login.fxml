@@ -40,6 +40,6 @@
 	
 	<Label text="" fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-text-fill: firebrick;" />
 	     
-	
+</GridPane>
 </center>
 </BorderPane>

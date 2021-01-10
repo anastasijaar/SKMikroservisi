@@ -5,12 +5,14 @@ import static app.security.SecurityConstants.ADMIN_TOKEN_PREFIX;
 import static app.security.SecurityConstants.HEADER_STRING;
 import static app.security.SecurityConstants.SECRET;
 import static app.security.SecurityConstants.TOKEN_PREFIX;
+import static java.util.Collections.emptyList;
 
 import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +65,7 @@ public class Controller {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<String> registerPost(@RequestBody RegistrationForm registrationForm) {
+	public ResponseEntity<UsernamePasswordAuthenticationToken> registerPost(@RequestBody RegistrationForm registrationForm) {
 		System.out.println("pre trya");
 		try {
 			System.out.println("unutar trya");
@@ -95,15 +97,16 @@ public class Controller {
 			
 			// cuvamo u nasoj bazi ovaj entitet
 			userRepo.saveAndFlush(user);
-
+			
+			UsernamePasswordAuthenticationToken authenticate = new UsernamePasswordAuthenticationToken(registrationForm.getEmail(), encoder.encode(registrationForm.getPassword()), emptyList());
 			
 			//SLANJE email-a !!!!!!!
 			sendMail(registrationForm.getEmail());
 			
 			
-			
+			System.out.println("Kraj try-a");
 			//Sve je proslo uspesno i saljemo status 200(OK) i ispisujemo poruku 'success'
-			return new ResponseEntity<>("success", HttpStatus.OK);
+			return new ResponseEntity<>(authenticate, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
