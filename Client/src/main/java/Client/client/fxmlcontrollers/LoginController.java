@@ -5,11 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import Client.client.MainViewManager;
+import Client.entities.Letovi;
 import Client.forms.Login_Form;
 import Client.utils.UtilsMethods;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 @Controller
@@ -44,7 +46,7 @@ public class LoginController {
 			
 			if(token.startsWith("Basic ")) {
 				System.out.println("Prefiks je: ");
-				mainViewManager.openModal("adminListaLetova");
+				mainViewManager.openModal("adminListaLetova", 750, 600);
 			}
 
 		} catch (Exception e) {
