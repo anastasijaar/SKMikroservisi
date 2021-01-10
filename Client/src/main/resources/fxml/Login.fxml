@@ -32,6 +32,12 @@
         onAction="#handleLogIn"/>
 	</HBox>
 	
+	<HBox spacing="10" alignment="bottom_right" 
+        GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Button text="Register"     
+        onAction="#handleRegister"/>
+	</HBox>
+	
 	<Label text="" fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-text-fill: firebrick;" />
 	     
 	</GridPane>
