@@ -64,9 +64,9 @@ public class Controller {
 
 	@PostMapping("/register")
 	public ResponseEntity<String> registerPost(@RequestBody RegistrationForm registrationForm) {
-
+		System.out.println("pre trya");
 		try {
-			
+			System.out.println("unutar trya");
 			//Proveravam da li u bazi postoji korisnik sa ovakvim mejlom, i ako postoji vracam BAD_REQUEST
 			User proveraMejla = userRepo.findByEmail(registrationForm.getEmail());
 			if(proveraMejla != null) {

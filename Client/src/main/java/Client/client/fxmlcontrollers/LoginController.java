@@ -52,39 +52,11 @@ public class LoginController {
 		}
 
 	}
+	
+	public void handleRegister(ActionEvent actionEvent) {
+		
+		mainViewManager.openModal("registration");
+		
+	}
 
 }
-
-
-/*
- <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-          <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-        </padding>
-         <children>
-            <TableView fx:id="listaLetovi">
-              <columns>
-                  <TableColumn prefWidth="100.0" text="Pocetna Destinacija">
-                 <cellValueFactory><PropertyValueFactory property="pocetnaDestinacija" />
-                </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="100.0" text="Krajnja Destinacija">
-                 <cellValueFactory><PropertyValueFactory property="krajnjaDestinacija" />
-                </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="150.0" text="Duzina Leta">
-                 <cellValueFactory><PropertyValueFactory property="duzinaLeta" />
-                </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="150.0" text="Cena">
-                 <cellValueFactory><PropertyValueFactory property="cena" />
-                </cellValueFactory>
-                </TableColumn>
-                <TableColumn prefWidth="100.0" text="Avion">
-                 <cellValueFactory><PropertyValueFactory property="avion" />
-                </cellValueFactory>
-                </TableColumn>
-              </columns>
-            </TableView>
-         </children>
-      </VBox>*/

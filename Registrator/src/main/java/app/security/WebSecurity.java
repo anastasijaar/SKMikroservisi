@@ -44,7 +44,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.cors().and().csrf().disable().authorizeRequests().antMatchers(LOGIN_PATH, REGISTRATION_PATH, "/whoAmI").permitAll()
+		http.cors().and().csrf().disable().authorizeRequests().antMatchers(LOGIN_PATH, REGISTRATION_PATH).permitAll()
 				.anyRequest().authenticated().and().addFilter(new JWTAuthenticationFilter(authenticationManager(), userRepo, adminRepo))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager(), userRepo, adminRepo)).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
