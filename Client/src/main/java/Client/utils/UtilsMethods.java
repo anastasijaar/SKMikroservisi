@@ -1,11 +1,18 @@
 package Client.utils;
 
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+
+import Client.entities.Letovi;
+import Client.forms.Let_Form;
 
 public class UtilsMethods {
 	
@@ -47,15 +54,20 @@ public class UtilsMethods {
 		return response;
 	}
 	
-	public static ResponseEntity<Object> sendGetObject(String url) {
+	public static ResponseEntity<String> sendGetList(String url) {
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		
-		ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
+		/*ResponseEntity<List<Letovi>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Letovi>>() {
+		});
 
-		return response;
+		return (ResponseEntity<List<Letovi>>) response.getBody();*/
+		
+		ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<String>() {});
+		
+		return res;
 	}
 
 

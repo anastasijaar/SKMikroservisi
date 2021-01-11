@@ -23,19 +23,16 @@ public class SpisakLetovaController {
 	}
 	
 	@GetMapping("/spisakLetova")
-	public ResponseEntity<List<ResponseEntity<Let_Form>>>spisakLetova(){
+	public ResponseEntity<List<Let>>spisakLetova(){
 		
 		try {
 			List<ResponseEntity<Let_Form>> responseEntiteti = new ArrayList<ResponseEntity<Let_Form>>();
 			
-			List<Let> let = letRepo.selectAllFlightWithFreeSpace();
-			for (Let l : let) {
-				responseEntiteti.add(new ResponseEntity<>(new Let_Form(l.getPocetnaDestinacija(), l.getKrajnjaDestinacija(),
-						l.getCena(), l.getDuzinaLeta(), l.isCanceled()), HttpStatus.OK));
-			}
-			System.out.println(let.size());
+			//List<Let> let = letRepo.selectAllFlightWithFreeSpace();
+			List<Let> let = letRepo.findAll();
 			
-			return new ResponseEntity<>(responseEntiteti, HttpStatus.OK);
+			
+			return new ResponseEntity<>(let, HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

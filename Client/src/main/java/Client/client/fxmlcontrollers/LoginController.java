@@ -44,8 +44,7 @@ public class LoginController {
 			
 			String token = response.getHeaders().get("Authorization").get(0);
 			
-			if(token.startsWith("Basic ")) {
-				System.out.println("Prefiks je: ");
+			if(token.startsWith("Admin ")) {
 				mainViewManager.openModal("adminListaLetova", 750, 600);
 			}
 
