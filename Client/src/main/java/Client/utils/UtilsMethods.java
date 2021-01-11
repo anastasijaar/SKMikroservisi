@@ -96,4 +96,21 @@ public class UtilsMethods {
 		return response;
 	}
 	
+	
+	public static ResponseEntity<String> sendPutString(String url, Object body)
+			throws RestClientException {
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json");
+
+
+		HttpEntity<Object> entity = new HttpEntity<Object>(body, headers);
+
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
+
+		return response;
+	}
+
+	
 }

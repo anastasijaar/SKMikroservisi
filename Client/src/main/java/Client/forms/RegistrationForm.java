@@ -20,6 +20,16 @@ public class RegistrationForm {
 		this.predjeneMilje = predjeneMilje;
 		this.brojPasosa = brojPasosa;
 	}
+	
+	public RegistrationForm(String ime, String prezime, String email, String password,
+			String brojPasosa) {
+		super();
+		this.ime = ime;
+		this.prezime = prezime;
+		this.email = email;
+		this.password = password;
+		this.brojPasosa = brojPasosa;
+	}
 
 	public String getIme() {
 		return ime;

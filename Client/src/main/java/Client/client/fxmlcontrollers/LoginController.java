@@ -47,6 +47,9 @@ public class LoginController {
 			if(token.startsWith("Admin ")) {
 				mainViewManager.openModal("adminListaLetova", 750, 600);
 			}
+			else if(token.startsWith("Basic ")) {
+				mainViewManager.openModal("userUrediProfil",750,600);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
