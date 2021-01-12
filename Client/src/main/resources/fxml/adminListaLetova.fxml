@@ -42,10 +42,6 @@
                  <cellValueFactory><PropertyValueFactory property="cena" />
         		</cellValueFactory>
         		</TableColumn>
-        		<TableColumn prefWidth="130.0" text="Avion">
-                 <cellValueFactory><PropertyValueFactory property="avion" />
-        		</cellValueFactory>
-        		</TableColumn>
               </columns>             
             </TableView>
          </children>      

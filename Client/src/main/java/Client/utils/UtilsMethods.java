@@ -1,25 +1,32 @@
 package Client.utils;
 
-import java.util.Arrays;
+import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestExecution;
+import org.springframework.http.client.ClientHttpRequestInterceptor;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import Client.entities.Letovi;
 import Client.forms.Let_Form;
+import Client.forms.SpisakLetova;
 
 public class UtilsMethods {
 	
+	private static RestTemplate restTemplate = new RestTemplate();
+	private static HttpHeaders headers = new HttpHeaders();
+	static {
+		headers.add("Content-Type", "application/json");
+	}
+	
 	public static ResponseEntity<String> sendGet(String url) {
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
 
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
@@ -29,24 +36,8 @@ public class UtilsMethods {
 	}
 	
 	
-	public static ResponseEntity<Boolean> sendGet(String url, String token) {
+	public static ResponseEntity<Object> sendGetObject(String url) {
 
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Autorization", token);
-		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-		
-		ResponseEntity<Boolean> response = restTemplate.exchange(url, HttpMethod.GET, entity, Boolean.class);
-
-		return response;
-	}
-	
-	
-	public static ResponseEntity<Object> sendGetObject(String url, String token) {
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Autorization", token);
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		
 		ResponseEntity<Object> response = restTemplate.exchange(url, HttpMethod.GET, entity, Object.class);
@@ -54,27 +45,32 @@ public class UtilsMethods {
 		return response;
 	}
 	
-	public static ResponseEntity<String> sendGetList(String url) {
+	/*public static ResponseEntity<String> sendGetList(String url) {
 
-		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 		
-		/*ResponseEntity<List<Letovi>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Letovi>>() {
+		ResponseEntity<List<Letovi>> response = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<List<Letovi>>() {
 		});
 
-		return (ResponseEntity<List<Letovi>>) response.getBody();*/
+		return (ResponseEntity<List<Letovi>>) response.getBody();
 		
 		ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<String>() {});
 		
 		return res;
+	}*/
+	
+	public static List<Let_Form> sendGetList(String url) {
+
+		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+		
+		ResponseEntity<SpisakLetova> response = restTemplate.exchange(url, HttpMethod.GET, entity, SpisakLetova.class);
+
+		return response.getBody().getSpisakLetova();
 	}
 
 
 	public static ResponseEntity<Integer> sendPostInteger(String url, Object body) {
-
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
 
 		HttpEntity<Object> entity = new HttpEntity<Object>(body, headers);
 
@@ -84,10 +80,6 @@ public class UtilsMethods {
 	}
 	
 	public static ResponseEntity<String> sendPostString(String url, Object body) throws RestClientException{
-		
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json");
 
 		HttpEntity<Object> entity = new HttpEntity<Object>(body, headers);
 		
@@ -100,17 +92,15 @@ public class UtilsMethods {
 	public static ResponseEntity<String> sendPutString(String url, Object body)
 			throws RestClientException {
 
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json");
-
-
 		HttpEntity<Object> entity = new HttpEntity<Object>(body, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, entity, String.class);
 
 		return response;
 	}
-
 	
+	
+	public static void setToken(String token) {
+		headers.add("Authorization", token);
+	}
 }

@@ -34,21 +34,22 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		String email = auth.getName();
 		String password = auth.getCredentials().toString();
-
+		System.out.println("Email je: " + email + " password je: " + password);
 		User user = userRepo.findByEmail(email);
 
 		if (user != null && encoder.matches(password, user.getPassword())) {
 			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
 			
 		}
-
+		System.out.println("trazi admina!");
 		Admin admin = adminRepo.findByEmail(email);
 		
 		if(admin == null) {
+			System.out.println("Nije nasao admina");
 			throw new BadCredentialsException("Authentication failed");
 		}
 		
-		if(encoder.matches(password, admin.getPassword())){
+		if(encoder.matches(password, admin.getPassword())){ 
 			return new UsernamePasswordAuthenticationToken(email, password, emptyList());
 		}
 

@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 
 import Client.client.MainViewManager;
-import Client.entities.Letovi;
 import Client.forms.Login_Form;
 import Client.utils.UtilsMethods;
 import javafx.event.ActionEvent;
@@ -43,6 +42,8 @@ public class LoginController {
 			response = UtilsMethods.sendPostString(url, loginForm);
 			
 			String token = response.getHeaders().get("Authorization").get(0);
+			
+			UtilsMethods.setToken(token);
 			
 			if(token.startsWith("Admin ")) {
 				mainViewManager.openModal("adminListaLetova", 750, 600);

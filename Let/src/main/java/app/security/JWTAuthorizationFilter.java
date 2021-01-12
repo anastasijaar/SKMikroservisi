@@ -47,7 +47,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 
 		String token = req.getHeader(HEADER_STRING);
-
+		System.out.println("Token je: " + token);
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req, token);
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);

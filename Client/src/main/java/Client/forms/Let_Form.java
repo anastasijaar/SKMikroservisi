@@ -9,6 +9,10 @@ public class Let_Form {
 	private boolean isCanceled;
 	private long idAviona;
 	
+	public Let_Form() {
+		
+	}
+	
 	public Let_Form(String pocetnaDestinacija, String krajnjaDestinacija, int duzinaLeta, int cena, boolean isCanceled) {
 		super();
 		this.pocetnaDestinacija = pocetnaDestinacija;

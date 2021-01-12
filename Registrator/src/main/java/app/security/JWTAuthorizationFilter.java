@@ -63,7 +63,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
 			// Provera da li se nalazi user u bazi
 			if (userRepo.existsByEmail(email) == false) {
-				
+				System.out.println("Admin se loguje");
 				jwt = JWT.require(Algorithm.HMAC512(ADMIN_SECRET.getBytes())).build()
 						.verify(token.replace(ADMIN_TOKEN_PREFIX, ""));
 				

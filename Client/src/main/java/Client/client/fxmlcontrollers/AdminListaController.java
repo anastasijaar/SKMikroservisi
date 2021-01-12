@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import Client.entities.Letovi;
 import Client.forms.Let_Form;
 import Client.utils.UtilsMethods;
 import javafx.collections.FXCollections;
@@ -21,9 +20,9 @@ import javafx.scene.control.TableView;
 @Controller
 public class AdminListaController {
 
-	@FXML private TableView<Letovi> adminListaLetovaTable;
+	@FXML private TableView<Let_Form> adminListaLetovaTable;
 	
-	private ObservableList<Letovi> sviLetovi;
+	private ObservableList<Let_Form> sviLetovi;
 	
 	@FXML
 	protected void initialize() {
@@ -31,24 +30,14 @@ public class AdminListaController {
 		
 		ObjectMapper objectMaper = new ObjectMapper();
 		String url = "http://localhost:8762/rest-service-2/spisakLetova";
-		ResponseEntity<String> response = UtilsMethods.sendGetList(url);
-		if (response.getStatusCode() == HttpStatus.OK) {
-
-			ObjectMapper mapper = new ObjectMapper();
+		//ResponseEntity<String> response = UtilsMethods.sendGetList(url);
 		
-			List<Let_Form> listaLetova = mapper.convertValue(response.getBody(),
-						new TypeReference<List<Let_Form>>() {
-						});
-			
-			adminListaLetovaTable.setItems(FXCollections.observableArrayList(sviLetovi));
-
-		}
+		List<Let_Form> response = UtilsMethods.sendGetList(url);
+		sviLetovi = FXCollections.observableArrayList(response);
+		adminListaLetovaTable.setItems(sviLetovi);
 		
 		System.out.println("Nesto");
 		System.out.println("Response je: "+response);
 		
 	}
-	
-	
-	
 }
