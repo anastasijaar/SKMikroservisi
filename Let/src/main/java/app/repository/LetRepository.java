@@ -13,6 +13,8 @@ import app.entities.Let;
 
 @Repository
 public interface LetRepository extends JpaRepository<Let, Long>, PagingAndSortingRepository<Let, Long>{
+	
+	Let findByidLeta(long idLeta);
 
 	//Selekcija leta po imenu aviona
 	@Query("select l from Let l where l.avion.nazivAviona like :ime")

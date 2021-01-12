@@ -57,4 +57,8 @@ public class Let_Form {
 	public void setCanceled(boolean isCanceled) {
 		this.isCanceled = isCanceled;
 	}
+	
+	public boolean getIsCanceled() {
+		return isCanceled;
+	}
 }

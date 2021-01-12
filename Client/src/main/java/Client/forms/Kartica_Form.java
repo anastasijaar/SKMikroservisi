@@ -1,4 +1,4 @@
-package app.forms;
+package Client.forms;
 
 public class Kartica_Form {
 
@@ -7,6 +7,18 @@ public class Kartica_Form {
 	private String brojKartice;
 	private String sigurnosniBroj;
 	
+	public Kartica_Form() {
+		
+	}
+	
+	public Kartica_Form(String imeVlasnika, String prezimeVlasnika, String brojKartice, String sigurnosniBroj) {
+		super();
+		this.imeVlasnika = imeVlasnika;
+		this.prezimeVlasnika = prezimeVlasnika;
+		this.brojKartice = brojKartice;
+		this.sigurnosniBroj = sigurnosniBroj;
+	}
+
 	public String getBrojKartice() {
 		return brojKartice;
 	}

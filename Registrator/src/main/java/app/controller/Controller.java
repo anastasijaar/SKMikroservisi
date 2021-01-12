@@ -181,8 +181,31 @@ public class Controller {
 		}
 	}
 	
+	@GetMapping("/getUser")
+	public ResponseEntity<User> getUser(@RequestHeader(value = HEADER_STRING) String token) {
+		System.out.println("pre trya");
+		try {
+			System.out.println("u trya");
+			// izvlacimo iz tokena subject koj je postavljen da bude email
+			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
+					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
+			
+			User user = userRepo.findByEmail(email);
+			
+			if(user != null) {
+				return new ResponseEntity<User>(user, HttpStatus.OK);
+			}
+			return null;
+		} catch (Exception e) {
+			System.out.println("u catch");
+
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
+	
 	@PutMapping("/urediProfil")
-	public ResponseEntity<String> registerPut(@RequestHeader(value = HEADER_STRING) String token, @RequestBody UrediProfil_Form urediProfilForm){
+	public ResponseEntity<Object> registerPut(@RequestHeader(value = HEADER_STRING) String token, @RequestBody UrediProfil_Form urediProfilForm){
 		try {
 			
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
@@ -221,9 +244,9 @@ public class Controller {
 			else 
 				user.setEmail(mail);
 			
-			if(mail != user.getEmail()) {
+			/*if(mail != user.getEmail()) {
 				sendMail(user.getEmail());
-			}
+			}*/
 			
 			if(urediProfilForm.getPassword() != null)
 				user.setPassword(encoder.encode(urediProfilForm.getPassword()));
@@ -233,7 +256,7 @@ public class Controller {
 			userRepo.save(user);
 			
 			
-			return new ResponseEntity<>(HttpStatus.CREATED);
+			return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -242,13 +265,15 @@ public class Controller {
 	}
 	
 	@PostMapping("/dodelaKreditneKartice")
-	public ResponseEntity<String> karticaPost(@RequestBody Kartica_Form karticaForm, @RequestHeader(value = HEADER_STRING) String token) {
+	public ResponseEntity<Kartica_Form> karticaPost(@RequestBody Kartica_Form karticaForm, @RequestHeader(value = HEADER_STRING) String token) {
 		try {
 			
 			String email = JWT.require(Algorithm.HMAC512(SECRET.getBytes())).build()
 					.verify(token.replace(TOKEN_PREFIX, "")).getSubject();
 
 			User user = userRepo.findByEmail(email);
+			
+			Kartica_Form kf = new Kartica_Form();
 			
 			Kartica kartica = new Kartica(karticaForm.getBrojKartice(), karticaForm.getSigurnosniBroj());
 			kartica.setImeVlasnika(user.getIme());
@@ -262,7 +287,12 @@ public class Controller {
 			
 			userKarticaRepo.save(userKartica);
 			
-			return new ResponseEntity<>("success", HttpStatus.OK);
+			kf.setBrojKartice(karticaForm.getBrojKartice());
+			kf.setSigurnosniBroj(karticaForm.getSigurnosniBroj());
+			kf.setImeVlasnika(user.getIme());
+			kf.setPrezimeVlasnika(user.getPrezime());
+			
+			return new ResponseEntity<>(kf, HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

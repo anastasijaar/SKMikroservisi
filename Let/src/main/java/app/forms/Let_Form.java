@@ -2,6 +2,7 @@ package app.forms;
 
 public class Let_Form {
 
+	private long idLeta;
 	private String pocetnaDestinacija;
 	private String krajnjaDestinacija;
 	private int duzinaLeta;
@@ -53,4 +54,11 @@ public class Let_Form {
 	public void setCanceled(boolean isCanceled) {
 		this.isCanceled = isCanceled;
 	}
+	public long getIdLeta() {
+		return idLeta;
+	}
+	public void setIdLeta(long idLeta) {
+		this.idLeta = idLeta;
+	}
+	
 }

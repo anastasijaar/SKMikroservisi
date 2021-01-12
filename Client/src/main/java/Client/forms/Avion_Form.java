@@ -1,4 +1,4 @@
-package app.forms;
+package Client.forms;
 
 public class Avion_Form {
 
@@ -7,14 +7,6 @@ public class Avion_Form {
 	private int kapacitet;
 	private int trenutnoPutnika;
 	private boolean canceled;
-
-	public Avion_Form(String nazivAviona, int kapacitet, int trenutnoPutnika, boolean canceled) {
-		super();
-		this.nazivAviona = nazivAviona;
-		this.kapacitet = kapacitet;
-		this.trenutnoPutnika = trenutnoPutnika;
-		this.canceled = canceled;
-	}
 
 	public String getNazivAviona() {
 		return nazivAviona;
@@ -47,13 +39,14 @@ public class Avion_Form {
 	public void setIdAviona(long idAviona) {
 		this.idAviona = idAviona;
 	}
-
-	public boolean isCanceled() {
+	
+	public boolean getCanceled() {
 		return canceled;
 	}
 
-	public void setCanceled(boolean canceled) {
-		this.canceled = canceled;
+	@Override
+	public String toString() {
+		return nazivAviona + ", " + kapacitet
+				+ ", " + trenutnoPutnika + ", " + canceled ;
 	}
-	
 }

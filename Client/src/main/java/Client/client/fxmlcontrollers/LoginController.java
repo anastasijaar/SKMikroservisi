@@ -39,6 +39,8 @@ public class LoginController {
 
 			Login_Form loginForm = new Login_Form(emailTf.getText(), passwordTf.getText());
 			
+			System.out.println("Login forma je: " + loginForm.getEmail() + " " + loginForm.getPassword());
+			
 			response = UtilsMethods.sendPostString(url, loginForm);
 			
 			String token = response.getHeaders().get("Authorization").get(0);
@@ -46,10 +48,10 @@ public class LoginController {
 			UtilsMethods.setToken(token);
 			
 			if(token.startsWith("Admin ")) {
-				mainViewManager.openModal("adminListaLetova", 750, 600);
+				mainViewManager.changeRoot("admin");
 			}
 			else if(token.startsWith("Basic ")) {
-				mainViewManager.openModal("userUrediProfil",750,600);
+				mainViewManager.changeRoot("userUrediProfil");
 			}
 
 		} catch (Exception e) {

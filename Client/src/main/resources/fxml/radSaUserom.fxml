@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+
+
+
+<TabPane xmlns:fx="http://javafx.com/fxml" fx:controller="Client.client.fxmlcontrollers.UserUrediProfilController">
+      <Tab text="Osnovni podaci">
+      <HBox alignment="center">
+      <GridPane alignment="center" hgap="10" vgap="10">
+	
+		<Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="nameTf" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Last name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="lastNameTf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <TextField fx:id="emailTf" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <TextField fx:id="passwordTf" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <Label text="Broj pasosa:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+        <TextField fx:id="brPasosaTf" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+
+
+        <Label text="" fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-text-fill: firebrick;" />
+		<HBox spacing="10" alignment="bottom_right" 
+            GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Button text="Change"
+            onAction="#handleChangeUserCredentials"/>
+        </HBox>
+		</GridPane>
+		</HBox>
+		
+        </Tab>
+        
+        
+        <Tab text="Dodavanje kartice">
+      	<HBox alignment="center">
+      	<GridPane alignment="center" hgap="10" vgap="10">
+	
+		<Label text="Broj kartice:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="brKarticeTf" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Sigurnosni broj:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="sigurnosniBrTf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+        <Label text="" fx:id="actionTarget" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+		<HBox spacing="10" alignment="bottom_right" 
+            GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Button text="Add"
+            onAction="#handleAddCard"/>
+        </HBox>
+		</GridPane>
+		</HBox>
+		
+        </Tab>
+         	
+ </TabPane>

@@ -101,13 +101,15 @@ public class DodavanjeIBrisanjeLetovaController {
 		}
 
 	}
+
 	
 	@PostMapping("/brisanjeLeta")
-	public ResponseEntity<String> brisanjeLeta(@RequestBody Avion_Form avionForm){
+	public ResponseEntity<String> brisanjeLeta(@RequestBody Let_Form letForm){
 		
 		try {
-			String imeAviona = avionForm.getNazivAviona();
-			Let let = letRepo.selectFlightByPlaneName(imeAviona);
+			//String imeAviona = letForm.getNazivAviona();
+			//Let let = letRepo.selectFlightByPlaneName(imeAviona);
+			Let let = letRepo.findByidLeta(letForm.getIdLeta());
 			if(let == null) {
 				return new ResponseEntity<String> ("Let ne postoji.",HttpStatus.BAD_REQUEST);
 			}

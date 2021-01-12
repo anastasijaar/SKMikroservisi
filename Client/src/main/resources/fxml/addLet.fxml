@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+
+<BorderPane fx:id="menu" prefHeight="428.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.client.fxmlcontrollers.AddLetController">
+
+<center>
+		<GridPane alignment="center" hgap="10" vgap="10">
+		 	<Label text="Pocetna destinacija:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+			<TextField fx:id="pocDestinacijaTf" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+			
+			<Label text="Krajnja destinacija:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+			<TextField fx:id="krajDestinacijaTf" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+			
+			<Label text="Duzina leta:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+			<TextField fx:id="duzLetaTf" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+			
+			<Label text="Cena:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+			<TextField fx:id="cenaTf" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+			
+			<Label text="Avion:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+			<ComboBox fx:id="avionCb" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+			
+			<HBox spacing="10" alignment="bottom_left" 
+        	GridPane.columnIndex="1" GridPane.rowIndex="5">
+        	<Button text="Add" onAction="#addLet"/>
+			</HBox>
+		</GridPane>
+</center>
+
+</BorderPane>

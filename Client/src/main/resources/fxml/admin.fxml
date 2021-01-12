@@ -15,10 +15,19 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 
-<BorderPane fx:id="menu" prefHeight="428.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.client.fxmlcontrollers.UserUrediProfilController">
+<BorderPane fx:id="menu" prefHeight="428.0" prefWidth="581.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.client.fxmlcontrollers.AdminListaController">
 
 <center>
-	<fx:include source="radSaUserom.fxml" />    	
+	<fx:include source="adminListaLetova.fxml" />    	
 </center>
+
+<bottom>
+      	<HBox spacing="10" alignment="bottom_left" 
+        	GridPane.columnIndex="0" GridPane.rowIndex="1">
+        	<Button text="Add" onAction="#addLetFlight"/>
+		
+        	<Button text="Delete"/>
+		</HBox>
+</bottom>
 
 </BorderPane>
